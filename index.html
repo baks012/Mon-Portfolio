@@ -4,582 +4,863 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bakayoko Sory — Développeur Web & Logiciel</title>
+  
+  <!-- Polices Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  
+  <!-- Icônes FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
   <style>
     :root {
-      --noir:#04090f; --fond:#060d18; --carte:#0a1628; --carte2:#0d1e36;
-      --bleu:#1e7fff; --cyan:#00e5c3; --blanc:#eaf2ff; --gris:#5a7a9e;
-      --bordure:rgba(30,127,255,.18); --rayon:16px; --transition:.35s ease;
+      --bg-principal: #070b14;
+      --bg-secondaire: #0d1527;
+      --carte: rgba(16, 26, 48, 0.7);
+      --carte-bordure: rgba(56, 130, 246, 0.16);
+      --carte-hover: rgba(22, 36, 68, 0.9);
+      
+      --bleu-eclat: #2563eb;
+      --bleu-cyan: #38bdf8;
+      
+      --texte-blanc: #f8fafc;
+      --texte-mute: #94a3b8;
+      --texte-sombre: #64748b;
+      
+      --rayon: 18px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    html{scroll-behavior:smooth;}
-    body{font-family:'Outfit',sans-serif;background:var(--fond);color:var(--blanc);overflow-x:hidden;}
-    a{text-decoration:none;color:inherit;}
-    ul{list-style:none;}
-    ::selection{background:var(--bleu);color:#fff;}
-    ::-webkit-scrollbar{width:5px;}
-    ::-webkit-scrollbar-thumb{background:var(--bleu);border-radius:99px;}
 
-    /* ===== UTILITAIRES ===== */
-    .container{max-width:1100px;margin:0 auto;padding:0 22px;}
-    .section{padding:100px 0;}
-    .tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;}
-    .titre-section{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;line-height:1.15;margin-bottom:14px;}
-    .titre-section span{color:var(--bleu);}
-    .sous-titre{font-size:1rem;color:var(--gris);max-width:560px;}
-    .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 28px;border-radius:50px;font-size:.92rem;font-weight:600;cursor:pointer;border:none;transition:var(--transition);}
-    .btn-bleu{background:var(--bleu);color:#fff;box-shadow:0 0 30px rgba(30,127,255,.35);}
-    .btn-bleu:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(30,127,255,.55);}
-    .btn-vide{background:transparent;color:var(--blanc);border:1px solid var(--bordure);}
-    .btn-vide:hover{border-color:var(--bleu);color:var(--bleu);transform:translateY(-3px);}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-principal);
+      color: var(--texte-blanc);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
 
-    /* ===== SWITCH LANGUE ===== */
-    .lang-switch {
-      display:flex;
-      align-items:center;
-      gap:4px;
-      background:var(--carte);
-      border:1px solid var(--bordure);
-      border-radius:50px;
-      padding:4px;
+    ::selection { background: var(--bleu-eclat); color: #fff; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: var(--bleu-eclat); border-radius: 10px; }
+
+    .bg-grille {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+      background-size: 45px 45px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+    .section { padding: 110px 0; }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bleu-cyan);
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 6px 14px;
+      border-radius: 99px;
+      margin-bottom: 16px;
+    }
+    .section-titre {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-titre span {
+      background: linear-gradient(135deg, var(--bleu-cyan), var(--bleu-eclat));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--texte-mute);
+      max-width: 580px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 28px;
+      border-radius: 50px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+    .btn-principal {
+      background: linear-gradient(135deg, var(--bleu-eclat), #1d4ed8);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+    }
+    .btn-principal:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(37, 99, 235, 0.6);
+    }
+    .btn-secondaire {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--texte-blanc);
+      border: 1px solid var(--carte-bordure);
+      backdrop-filter: blur(10px);
+    }
+    .btn-secondaire:hover {
+      border-color: var(--bleu-cyan);
+      color: var(--bleu-cyan);
+      transform: translateY(-3px);
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 20px 0;
+      transition: var(--transition);
+    }
+    nav.collant {
+      background: rgba(7, 11, 20, 0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(56, 130, 246, 0.12);
+      padding: 14px 0;
+    }
+    .nav-contenu {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      text-decoration: none;
+      color: #fff;
+    }
+    .logo span { color: var(--bleu-cyan); }
+    .nav-items { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-items a {
+      color: var(--texte-mute);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .nav-items a:hover { color: #fff; }
+
+    .lang-switcher {
+      display: flex;
+      gap: 4px;
+      background: rgba(16, 26, 48, 0.8);
+      border: 1px solid var(--carte-bordure);
+      border-radius: 99px;
+      padding: 3px;
     }
     .lang-btn {
-      padding:5px 13px;
-      border-radius:50px;
-      font-size:.78rem;
-      font-weight:700;
-      cursor:pointer;
-      border:none;
-      background:transparent;
-      color:var(--gris);
-      transition:var(--transition);
-      letter-spacing:.05em;
+      background: transparent;
+      border: none;
+      color: var(--texte-sombre);
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: var(--transition);
     }
-    .lang-btn.actif {
-      background:var(--bleu);
-      color:#fff;
-      box-shadow:0 0 12px rgba(30,127,255,.4);
+    .lang-btn.actif { background: var(--bleu-eclat); color: #fff; }
+
+    /* HERO */
+    #accueil { min-height: 95vh; display: flex; align-items: center; padding-top: 100px; }
+    .hero-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
+    .hero-statut {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 16px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 99px;
+      font-size: 0.82rem;
+      color: #34d399;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .pulsation-point {
+      width: 8px; height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulsate 1.6s infinite ease-in-out;
+    }
+    @keyframes pulsate {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+    .hero-titre-h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.12;
+      margin-bottom: 12px;
+    }
+    .role-dynamique {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--bleu-cyan);
+      min-height: 1.8em;
+      margin-bottom: 20px;
+    }
+    .curseur-bar {
+      display: inline-block;
+      width: 2px; height: 1.1em;
+      background: var(--bleu-cyan);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: clignote 0.8s infinite;
+    }
+    @keyframes clignote { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    .hero-presentation {
+      color: var(--texte-mute);
+      font-size: 1.05rem;
+      margin-bottom: 34px;
+      max-width: 500px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 36px; }
+    .hero-tags { display: flex; gap: 12px; flex-wrap: wrap; }
+    .mini-badge {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--carte);
+      border: 1px solid var(--carte-bordure);
+      padding: 8px 16px;
+      border-radius: 99px;
+      font-size: 0.82rem;
+      color: var(--texte-mute);
+    }
+    .mini-badge i { color: var(--bleu-cyan); }
+
+    /* Photo de Bakayoko Sory */
+    .hero-illustration { display: flex; justify-content: center; position: relative; }
+    .hero-card-visuel {
+      position: relative;
+      width: 320px; height: 380px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #101c33, #070d1a);
+      border: 2px solid rgba(56, 189, 248, 0.3);
+      box-shadow: 0 10px 50px rgba(37, 99, 235, 0.25);
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-card-visuel img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center top;
+      transition: var(--transition);
+    }
+    .hero-card-visuel:hover img {
+      transform: scale(1.03);
     }
 
-    /* ===== REVEAL ===== */
-    .reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease;}
-    .reveal.visible{opacity:1;transform:none;}
-    .d1{transition-delay:.1s;} .d2{transition-delay:.2s;} .d3{transition-delay:.3s;} .d4{transition-delay:.4s;}
-
-    /* ===== PARTICULES ===== */
-    #particules{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;}
-    .particule{position:absolute;border-radius:50%;background:var(--bleu);opacity:.12;animation:flotte linear infinite;}
-    @keyframes flotte{0%{transform:translateY(100vh) scale(0);opacity:0;}10%{opacity:.12;}90%{opacity:.12;}100%{transform:translateY(-10vh) scale(1);opacity:0;}}
-
-    /* ===== CURSEUR ===== */
-    .curseur{width:10px;height:10px;background:var(--bleu);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;}
-    .curseur-cercle{width:36px;height:36px;border:1.5px solid rgba(30,127,255,.5);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:width .25s,height .25s;}
-
-    /* ===== NAV ===== */
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;transition:var(--transition);}
-    nav.collant{background:rgba(6,13,24,.90);backdrop-filter:blur(18px);border-bottom:1px solid var(--bordure);padding:12px 0;}
-    .nav-interieur{display:flex;align-items:center;justify-content:space-between;gap:20px;}
-    .logo{font-size:1.2rem;font-weight:800;}
-    .logo span{color:var(--bleu);}
-    .nav-liens{display:flex;align-items:center;gap:24px;}
-    .nav-liens a{font-size:.88rem;font-weight:500;color:var(--gris);transition:var(--transition);position:relative;padding-bottom:2px;}
-    .nav-liens a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--bleu);border-radius:2px;transition:var(--transition);}
-    .nav-liens a:hover{color:var(--blanc);}
-    .nav-liens a:hover::after{width:100%;}
-    .hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;}
-    .hamburger span{display:block;width:22px;height:2px;background:var(--blanc);border-radius:2px;transition:var(--transition);}
-    .hamburger.ouvert span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-    .hamburger.ouvert span:nth-child(2){opacity:0;}
-    .hamburger.ouvert span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-    .menu-mobile{display:none;flex-direction:column;background:rgba(6,13,24,.97);border-top:1px solid var(--bordure);}
-    .menu-mobile.ouvert{display:flex;}
-    .menu-mobile a{padding:15px 22px;font-size:.95rem;color:var(--gris);border-bottom:1px solid var(--bordure);transition:var(--transition);}
-    .menu-mobile a:hover{color:var(--bleu);padding-left:30px;}
-
-    /* ===== HERO ===== */
-    #accueil{min-height:100vh;display:flex;align-items:center;position:relative;padding-top:80px;}
-    #accueil::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(30,127,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(30,127,255,.05) 1px,transparent 1px);background-size:50px 50px;mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,#000 40%,transparent 100%);}
-    .hero-grille{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;position:relative;z-index:1;}
-    .badge-dispo{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:rgba(0,229,195,.1);border:1px solid rgba(0,229,195,.28);border-radius:50px;font-size:.78rem;color:var(--cyan);font-weight:600;margin-bottom:22px;}
-    .point-vert{width:7px;height:7px;background:var(--cyan);border-radius:50%;animation:clignote 1.4s ease-in-out infinite;}
-    @keyframes clignote{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(.7);}}
-    .hero-titre{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;line-height:1.1;margin-bottom:8px;}
-    .hero-titre .nom{color:var(--bleu);}
-    .hero-role{font-size:1.15rem;color:var(--cyan);font-weight:600;margin-bottom:18px;min-height:1.7em;}
-    .curseur-texte{display:inline-block;width:2px;height:1.1em;background:var(--bleu);vertical-align:middle;margin-left:2px;animation:clignoter .7s ease-in-out infinite;}
-    @keyframes clignoter{0%,100%{opacity:1}50%{opacity:0}}
-    .hero-desc{font-size:1rem;color:var(--gris);margin-bottom:32px;max-width:480px;line-height:1.8;}
-    .hero-boutons{display:flex;gap:12px;flex-wrap:wrap;}
-    .hero-infos{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap;}
-    .info-pill{display:flex;align-items:center;gap:7px;font-size:.82rem;color:var(--gris);background:var(--carte);border:1px solid var(--bordure);padding:7px 14px;border-radius:50px;}
-    .info-pill i{color:var(--bleu);font-size:.75rem;}
-
-    /* ===== AVATAR DU HERO ===== */
-    .hero-visuel{display:flex;justify-content:center;}
-    .avatar-conteneur{position:relative;width:320px;height:320px;}
-    .anneau{position:absolute;inset:-12px;border-radius:50%;background:conic-gradient(from 0deg,var(--bleu),var(--cyan),transparent 60%);animation:tourner 7s linear infinite;}
-    @keyframes tourner{to{transform:rotate(360deg);}}
-    .avatar-cercle{width:100%;height:100%;border-radius:50%;background:linear-gradient(145deg,var(--carte),var(--carte2));border:3px solid var(--carte2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-    .avatar-cercle img{width:100%;height:100%;object-fit:cover;object-position:center top;}
-    .badge-flottant{position:absolute;background:var(--carte);border:1px solid var(--bordure);border-radius:12px;padding:8px 14px;font-size:.78rem;font-weight:600;display:flex;align-items:center;gap:7px;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.3);animation:flotteBadge 3s ease-in-out infinite;}
-    .badge-flottant i{color:var(--bleu);}
-    .badge-flottant.b1{top:8%;right:-12%;animation-delay:0s;}
-    .badge-flottant.b2{bottom:15%;left:-12%;animation-delay:1.5s;}
-    @keyframes flotteBadge{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-
-    /* ===== À PROPOS ===== */
-    #apropos{background:rgba(10,22,40,.5);}
-    .apropos-grille{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:center;}
-    .carte-profil{background:var(--carte);border:1px solid var(--bordure);border-radius:var(--rayon);padding:34px;position:relative;overflow:hidden;text-align:center;}
-    .carte-profil::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--bleu),var(--cyan));}
-    .profil-avatar{width:110px;height:110px;border-radius:50%;overflow:hidden;border:3px solid var(--bleu);margin:0 auto 16px;}
-    .profil-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top;}
-    .carte-profil h3{font-size:1.25rem;font-weight:700;margin-bottom:4px;}
-    .carte-profil .role{color:var(--cyan);font-size:.85rem;margin-bottom:24px;font-weight:600;}
-    .infos-liste{display:flex;flex-direction:column;gap:13px;text-align:left;}
-    .info-ligne{display:flex;align-items:center;gap:12px;font-size:.88rem;color:var(--gris);}
-    .info-ligne i{color:var(--bleu);width:16px;flex-shrink:0;}
-    .info-ligne strong{color:var(--blanc);}
-    .apropos-texte p{color:var(--gris);font-size:.97rem;line-height:1.85;margin-bottom:18px;}
-    .stats-grille{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px;}
-    .stat-item{background:var(--carte);border:1px solid var(--bordure);border-radius:14px;padding:18px;transition:var(--transition);}
-    .stat-item:hover{border-color:var(--bleu);transform:translateY(-3px);}
-    .stat-nombre{font-size:1.8rem;font-weight:900;color:var(--bleu);line-height:1;}
-    .stat-label{font-size:.8rem;color:var(--gris);margin-top:5px;}
-
-    /* ===== COMPÉTENCES ===== */
-    #competences{background:var(--fond);}
-    .comp-grille{display:grid;grid-template-columns:1fr 1fr;gap:50px;}
-    .categorie-titre{font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
-    .categorie-titre::after{content:'';flex:1;height:1px;background:var(--bordure);}
-    .barre-item{margin-bottom:18px;}
-    .barre-haut{display:flex;justify-content:space-between;margin-bottom:7px;font-size:.9rem;}
-    .barre-nom{font-weight:500;} .barre-pct{font-weight:700;color:var(--bleu);}
-    .barre-fond{height:7px;background:var(--carte);border-radius:99px;overflow:hidden;}
-    .barre-remplissage{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--bleu),var(--cyan));width:0;transition:width 1.3s cubic-bezier(.4,0,.2,1);}
-    .outils-grille{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-    .outil{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 10px;background:var(--carte);border:1px solid var(--bordure);border-radius:var(--rayon);transition:var(--transition);text-align:center;}
-    .outil:hover{border-color:var(--bleu);transform:translateY(-4px);box-shadow:0 8px 24px rgba(30,127,255,.14);}
-    .outil i{font-size:1.6rem;color:var(--bleu);}
-    .outil span{font-size:.78rem;color:var(--gris);line-height:1.3;font-weight:600;}
-
-    /* ===== PROJETS ===== */
-    #projets{background:rgba(10,22,40,.4);}
-    .projets-grille{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
-    .carte-projet{background:var(--carte);border:1px solid var(--bordure);border-radius:var(--rayon);overflow:hidden;display:flex;flex-direction:column;transition:var(--transition);}
-    .carte-projet:hover{transform:translateY(-6px);border-color:var(--bleu);box-shadow:0 16px 44px rgba(30,127,255,.18);}
-    .projet-image{height:150px;background:linear-gradient(135deg,var(--carte2),#0f2b4c);display:flex;align-items:center;justify-content:center;font-size:3.2rem;color:var(--bleu);position:relative;}
-    .projet-corps{padding:20px;flex:1;display:flex;flex-direction:column;}
-    .projet-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
-    .p-tag{padding:3px 10px;border-radius:50px;font-size:.7rem;font-weight:700;background:rgba(30,127,255,.12);color:var(--bleu);border:1px solid rgba(30,127,255,.25);}
-    .projet-titre{font-size:1.05rem;font-weight:700;margin-bottom:8px;}
-    .projet-desc{font-size:.86rem;color:var(--gris);flex:1;line-height:1.65;}
-    .projet-pied{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--bordure);}
-    .projet-lien{font-size:.83rem;font-weight:600;color:var(--bleu);display:flex;align-items:center;gap:6px;transition:var(--transition);}
-    .projet-lien:hover{gap:9px;color:var(--cyan);}
-    .projet-statut{font-size:.7rem;color:var(--cyan);background:rgba(0,229,195,.1);border:1px solid rgba(0,229,195,.2);padding:3px 10px;border-radius:50px;}
-
-    /* ===== SERVICES ===== */
-    #services{background:var(--fond);}
-    .services-grille{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
-    .carte-service{background:var(--carte);border:1px solid var(--bordure);border-radius:var(--rayon);padding:30px 24px;transition:var(--transition);position:relative;overflow:hidden;}
-    .carte-service:hover{border-color:var(--bleu);transform:translateY(-5px);box-shadow:0 14px 38px rgba(30,127,255,.14);}
-    .service-icone{width:52px;height:52px;border-radius:14px;background:rgba(30,127,255,.12);border:1px solid rgba(30,127,255,.22);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--bleu);margin-bottom:18px;transition:var(--transition);}
-    .carte-service:hover .service-icone{background:var(--bleu);color:#fff;box-shadow:0 0 22px rgba(30,127,255,.5);}
-    .carte-service h3{font-size:1.05rem;font-weight:700;margin-bottom:10px;}
-    .carte-service p{font-size:.86rem;color:var(--gris);line-height:1.65;}
-
-    /* ===== CONTACT ===== */
-    #contact{background:rgba(10,22,40,.5);}
-    .contact-grille{display:grid;grid-template-columns:1fr 1.2fr;gap:55px;align-items:start;}
-    .contact-gauche h3{font-size:1.5rem;font-weight:700;margin-bottom:12px;}
-    .contact-gauche p{color:var(--gris);font-size:.93rem;line-height:1.8;margin-bottom:26px;}
-    .contact-liste{display:flex;flex-direction:column;gap:13px;margin-bottom:28px;}
-    .contact-ligne{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--carte);border:1px solid var(--bordure);border-radius:var(--rayon);transition:var(--transition);}
-    .contact-ligne:hover{border-color:var(--bleu);transform:translateX(5px);}
-    .contact-icone{width:38px;height:38px;border-radius:10px;background:rgba(30,127,255,.12);display:flex;align-items:center;justify-content:center;color:var(--bleu);flex-shrink:0;}
-    .cl-label{font-size:.75rem;color:var(--gris);}
-    .cl-val{font-size:.88rem;font-weight:600;}
-    .reseaux{display:flex;gap:10px;}
-    .reseau-lien{width:42px;height:42px;border-radius:50%;background:var(--carte);border:1px solid var(--bordure);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--gris);transition:var(--transition);}
-    .reseau-lien:hover{background:var(--bleu);border-color:var(--bleu);color:#fff;transform:translateY(-3px);box-shadow:0 6px 18px rgba(30,127,255,.4);}
-    .formulaire{display:flex;flex-direction:column;gap:15px;}
-    .form-ligne{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
-    .form-groupe{display:flex;flex-direction:column;gap:6px;}
-    .form-groupe label{font-size:.8rem;font-weight:600;color:var(--gris);}
-    .form-groupe input,.form-groupe textarea{padding:12px 15px;background:var(--carte);border:1px solid var(--bordure);border-radius:12px;color:var(--blanc);font-family:'Outfit',sans-serif;font-size:.88rem;outline:none;transition:var(--transition);}
-    .form-groupe input:focus,.form-groupe textarea:focus{border-color:var(--bleu);box-shadow:0 0 0 3px rgba(30,127,255,.1);}
-
-    /* ===== FOOTER ===== */
-    footer{background:var(--noir);border-top:1px solid var(--bordure);padding:30px 0;text-align:center;}
-    .footer-logo{font-size:1.1rem;font-weight:800;margin-bottom:8px;}
-    .footer-logo span{color:var(--bleu);}
-    footer p{font-size:.82rem;color:var(--gris);}
-
-    /* ===== RESPONSIVE ===== */
-    @media(max-width:880px){
-      .nav-liens{display:none;} .hamburger{display:flex;}
-      .hero-grille{grid-template-columns:1fr;text-align:center;}
-      .hero-desc{margin:0 auto 32px;} .hero-boutons{justify-content:center;}
-      .hero-visuel{order:-1;} .avatar-conteneur{width:220px;height:220px;}
-      .hero-infos{justify-content:center;} .badge-flottant{display:none;}
-      .apropos-grille,.comp-grille,.contact-grille{grid-template-columns:1fr;}
-      .projets-grille,.services-grille{grid-template-columns:1fr 1fr;}
+    /* PILIERS DE COMPÉTENCES */
+    .grille-piliers {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 40px;
     }
-    @media(max-width:560px){
-      .section{padding:70px 0;}
-      .projets-grille,.services-grille{grid-template-columns:1fr;}
-      .form-ligne{grid-template-columns:1fr;}
-      .outils-grille{grid-template-columns:repeat(2,1fr);}
+    .pilier-card {
+      background: var(--carte);
+      border: 1px solid var(--carte-bordure);
+      border-radius: var(--rayon);
+      padding: 32px;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+    .pilier-card:hover {
+      background: var(--carte-hover);
+      border-color: var(--bleu-cyan);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+    }
+    .pilier-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .pilier-icon {
+      width: 50px; height: 50px;
+      border-radius: 14px;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(37, 99, 235, 0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      color: var(--bleu-cyan);
+    }
+    .skills-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: #e2e8f0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .skill-chip i { color: var(--bleu-cyan); font-size: 0.8rem; }
+
+    /* PROJETS PHARES */
+    .projets-layout {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .carte-projet {
+      background: var(--carte);
+      border: 1px solid var(--carte-bordure);
+      border-radius: var(--rayon);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+    .carte-projet:hover {
+      transform: translateY(-6px);
+      border-color: var(--bleu-cyan);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    .projet-header-banner {
+      height: 150px;
+      background: linear-gradient(135deg, #0f1e3d, #091224);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.2rem;
+      color: var(--bleu-cyan);
+      border-bottom: 1px solid var(--carte-bordure);
+    }
+    .projet-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .projet-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .tag-techno {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(37, 99, 235, 0.25);
+      border-radius: 99px;
+      color: var(--bleu-cyan);
+    }
+    .projet-body h3 { font-size: 1.15rem; margin-bottom: 10px; font-weight: 700; }
+    .projet-body p { font-size: 0.88rem; color: var(--texte-mute); line-height: 1.7; margin-bottom: 20px; flex: 1; }
+    .projet-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--carte-bordure);
+      padding-top: 16px;
+    }
+    .projet-link {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--bleu-cyan);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+    .projet-link:hover { color: #fff; gap: 10px; }
+
+    /* PARCOURS */
+    .timeline { position: relative; max-width: 800px; margin: 40px auto 0; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 20px; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--carte-bordure);
+    }
+    .timeline-item { position: relative; padding-left: 60px; margin-bottom: 36px; }
+    .timeline-dot {
+      position: absolute;
+      left: 11px; top: 4px;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--bg-principal);
+      border: 3px solid var(--bleu-cyan);
+    }
+    .timeline-content {
+      background: var(--carte);
+      border: 1px solid var(--carte-bordure);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .timeline-annee { font-size: 0.8rem; font-weight: 700; color: var(--bleu-cyan); margin-bottom: 6px; }
+    .timeline-titre { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+    .timeline-lieu { font-size: 0.88rem; color: var(--texte-mute); }
+
+    /* CONTACT */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: start;
+      margin-top: 40px;
+    }
+    .contact-item-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--carte);
+      border: 1px solid var(--carte-bordure);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+    .contact-item-card:hover {
+      border-color: var(--bleu-cyan);
+      transform: translateX(6px);
+      background: var(--carte-hover);
+    }
+    .contact-icon-box {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(37, 99, 235, 0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      color: var(--bleu-cyan);
+      flex-shrink: 0;
+    }
+    .contact-meta span { font-size: 0.78rem; color: var(--texte-sombre); display: block; }
+    .contact-meta strong { font-size: 0.95rem; color: #fff; }
+
+    .form-box {
+      background: var(--carte);
+      border: 1px solid var(--carte-bordure);
+      border-radius: var(--rayon);
+      padding: 34px;
+    }
+    .form-row { margin-bottom: 18px; }
+    .form-row label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--texte-mute);
+      margin-bottom: 8px;
+    }
+    .form-row input, .form-row textarea {
+      width: 100%;
+      background: rgba(7, 11, 20, 0.7);
+      border: 1px solid var(--carte-bordure);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      outline: none;
+    }
+    .form-row input:focus, .form-row textarea:focus {
+      border-color: var(--bleu-cyan);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    }
+
+    footer {
+      border-top: 1px solid var(--carte-bordure);
+      padding: 40px 0;
+      text-align: center;
+      background: #05080f;
+    }
+    footer p { color: var(--texte-mute); font-size: 0.88rem; }
+
+    @media (max-width: 900px) {
+      .hero-layout, .grille-piliers, .contact-wrapper { grid-template-columns: 1fr; }
+      .projets-layout { grid-template-columns: 1fr; }
+      .nav-items { display: none; }
+      .hero-illustration { order: -1; margin-bottom: 20px; }
+      .hero-card-visuel { width: 260px; height: 320px; }
     }
   </style>
 </head>
 <body>
 
-<div id="particules"></div>
-<div class="curseur" id="curseur"></div>
-<div class="curseur-cercle" id="curseurCercle"></div>
+<div class="bg-grille"></div>
 
-<!-- NAV -->
+<!-- NAVIGATION -->
 <nav id="navbar">
-  <div class="container nav-interieur">
+  <div class="container nav-contenu">
     <a href="#accueil" class="logo">Bakayoko<span>.</span>dev</a>
-    <ul class="nav-liens">
+    <ul class="nav-items">
       <li><a href="#accueil" data-fr="Accueil" data-en="Home">Accueil</a></li>
-      <li><a href="#apropos" data-fr="À Propos" data-en="About">À Propos</a></li>
       <li><a href="#competences" data-fr="Compétences" data-en="Skills">Compétences</a></li>
       <li><a href="#projets" data-fr="Projets" data-en="Projects">Projets</a></li>
-      <li><a href="#services" data-fr="Services" data-en="Services">Services</a></li>
+      <li><a href="#parcours" data-fr="Parcours" data-en="Education">Parcours</a></li>
       <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
       <li>
-        <a href="CV_Bakayoko_Sory.pdf" download="CV_Bakayoko_Sory.pdf" class="btn btn-bleu" style="padding:9px 20px;font-size:.82rem;">
-          <i class="fas fa-download"></i> <span data-fr="Mon CV" data-en="My Resume">Mon CV</span>
+        <a href="https://github.com/baks012" target="_blank" class="btn btn-secondaire" style="padding:8px 18px;font-size:0.82rem;">
+          <i class="fab fa-github"></i> <span>GitHub</span>
         </a>
       </li>
       <li>
-        <div class="lang-switch">
+        <div class="lang-switcher">
           <button class="lang-btn actif" onclick="changerLangue('fr')">FR</button>
           <button class="lang-btn" onclick="changerLangue('en')">EN</button>
         </div>
       </li>
     </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-  <div class="menu-mobile" id="menuMobile">
-    <a href="#accueil" data-fr="Accueil" data-en="Home">Accueil</a>
-    <a href="#apropos" data-fr="À Propos" data-en="About">À Propos</a>
-    <a href="#competences" data-fr="Compétences" data-en="Skills">Compétences</a>
-    <a href="#projets" data-fr="Projets" data-en="Projects">Projets</a>
-    <a href="#services" data-fr="Services" data-en="Services">Services</a>
-    <a href="#contact" data-fr="Contact" data-en="Contact">Contact</a>
-    <a href="CV_Bakayoko_Sory.pdf" download="CV_Bakayoko_Sory.pdf" data-fr="Télécharger mon CV" data-en="Download Resume">Télécharger mon CV</a>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- HERO SECTION -->
 <section id="accueil" class="section">
-  <div class="container hero-grille">
-    <div class="hero-texte">
-      <div class="badge-dispo">
-        <span class="point-vert"></span>
-        <span data-fr="Disponible pour vos projets & opportunités" data-en="Available for new opportunities & projects">Disponible pour vos projets & opportunités</span>
+  <div class="container hero-layout">
+    <div class="hero-text-col">
+      <div class="hero-statut">
+        <span class="pulsation-point"></span>
+        <span data-fr="Disponible pour opportunités professionnelles" data-en="Available for software & web opportunities">Disponible pour opportunités professionnelles</span>
       </div>
-      <h1 class="hero-titre">
-        <span data-fr="Bonjour, je suis" data-en="Hello, I am">Bonjour, je suis</span><br/>
-        <span class="nom">Bakayoko Sory</span>
+      
+      <h1 class="hero-titre-h1">
+        <span data-fr="Bonjour, je suis" data-en="Hello, I'm">Bonjour, je suis</span><br/>
+        Bakayoko Sory
       </h1>
-      <div class="hero-role">
-        <span id="roleTexte"></span><span class="curseur-texte"></span>
+
+      <div class="role-dynamique">
+        <span id="typingTarget"></span><span class="curseur-bar"></span>
       </div>
-      <p class="hero-desc" data-fr="Développeur d'Applications & Web passionné, titulaire d'un BTS en Informatique Développement d'Applications (IDA). Je conçois des solutions logicielles performantes, des bases de données robustes et des interfaces web modernes." data-en="Passionate Application & Web Developer, certified with a degree in Application Development (BTS IDA). I build robust software solutions, structured databases, and modern web interfaces.">
-        Développeur d'Applications & Web passionné, titulaire d'un BTS en Informatique Développement d'Applications (IDA). Je conçois des solutions logicielles performantes, des bases de données robustes et des interfaces web modernes.
+
+      <p class="hero-presentation" data-fr="Développeur diplômé du BTS en Informatique Développement d'Applications (IDA). Je conçois des solutions logicielles fiables, des bases de données structurées et des plateformes web modernes et réactives." data-en="Certified Software Developer with an Associate Degree in Application Development (BTS IDA). I build robust applications, structured relational databases, and modern web platforms.">
+        Développeur diplômé du BTS en Informatique Développement d'Applications (IDA). Je conçois des solutions logicielles fiables, des bases de données structurées et des plateformes web modernes et réactives.
       </p>
-      <div class="hero-boutons">
-        <a href="#contact" class="btn btn-bleu" data-fr="Me Contacter" data-en="Contact Me">
-          <i class="fas fa-paper-plane"></i> <span>Me Contacter</span>
+
+      <div class="hero-actions">
+        <a href="https://wa.me/2250556967845" target="_blank" class="btn btn-principal">
+          <i class="fab fa-whatsapp"></i> <span data-fr="Discuter sur WhatsApp" data-en="Chat on WhatsApp">Discuter sur WhatsApp</span>
         </a>
-        <a href="#projets" class="btn btn-vide" data-fr="Voir mes Projets" data-en="View Projects">
-          <i class="fas fa-code"></i> <span>Voir mes Projets</span>
+        <a href="#projets" class="btn btn-secondaire">
+          <i class="fas fa-layer-group"></i> <span data-fr="Voir mes Projets" data-en="Explore Projects">Voir mes Projets</span>
         </a>
       </div>
-      <div class="hero-infos">
-        <div class="info-pill"><i class="fas fa-map-marker-alt"></i> <span>Abidjan, Côte d'Ivoire</span></div>
-        <div class="info-pill"><i class="fas fa-graduation-cap"></i> <span data-fr="BTS IDA" data-en="BTS IDA Degree">BTS IDA</span></div>
-        <div class="info-pill"><i class="fas fa-briefcase"></i> <span data-fr="Ouvert aux missions" data-en="Open to Work">Ouvert aux missions</span></div>
+
+      <div class="hero-tags">
+        <div class="mini-badge"><i class="fas fa-map-marker-alt"></i> <span>Abidjan, Côte d'Ivoire</span></div>
+        <div class="mini-badge"><i class="fas fa-graduation-cap"></i> <span data-fr="BTS IDA Certifié" data-en="BTS IDA Certified">BTS IDA Certifié</span></div>
+        <div class="mini-badge"><i class="fas fa-briefcase"></i> <span data-fr="CDI • CDD • Missions" data-en="Full-Time • Contract">CDI • CDD • Missions</span></div>
       </div>
     </div>
 
-    <div class="hero-visuel">
-      <div class="avatar-conteneur">
-        <div class="anneau"></div>
-        <div class="avatar-cercle">
-          <!-- Photo de profil GitHub de Sory -->
-          <img src="https://avatars.githubusercontent.com/u/190827299?v=4" alt="Bakayoko Sory" onerror="this.src='https://raw.githubusercontent.com/Matthieu83600/Matthieu83600/main/developer.svg'" />
-        </div>
-        <div class="badge-flottant b1">
-          <i class="fas fa-laptop-code"></i> <span>Web & Software</span>
-        </div>
-        <div class="badge-flottant b2">
-          <i class="fas fa-database"></i> <span>SQL & Access</span>
-        </div>
+    <!-- Visuel Photo Professionnelle -->
+    <div class="hero-illustration">
+      <div class="hero-card-visuel">
+        <!-- Ta photo officielle (avec fallback automatique sur ton avatar GitHub) -->
+        <img src="photo.jpg" alt="Bakayoko Sory" onerror="this.src='https://avatars.githubusercontent.com/u/190827299?v=4'" />
       </div>
     </div>
   </div>
 </section>
 
-<!-- À PROPOS -->
-<section id="apropos" class="section">
-  <div class="container">
-    <div class="apropos-grille">
-      <div class="carte-profil reveal d1">
-        <div class="profil-avatar">
-          <img src="https://avatars.githubusercontent.com/u/190827299?v=4" alt="Bakayoko Sory" />
-        </div>
-        <h3>Bakayoko Sory</h3>
-        <p class="role" data-fr="Développeur d'Applications & Web" data-en="Application & Web Developer">Développeur d'Applications & Web</p>
-        <div class="infos-liste">
-          <div class="info-ligne"><i class="fas fa-graduation-cap"></i> <span><strong data-fr="Diplôme :" data-en="Degree:">Diplôme :</strong> BTS Informatique (IDA)</span></div>
-          <div class="info-ligne"><i class="fas fa-university"></i> <span><strong data-fr="Institut :" data-en="Institute:">Institut :</strong> ISNT Le Plateau</span></div>
-          <div class="info-ligne"><i class="fas fa-envelope"></i> <span><strong>Email :</strong> sorybakayoko012@gmail.com</span></div>
-          <div class="info-ligne"><i class="fas fa-phone-alt"></i> <span><strong data-fr="Tél :" data-en="Phone:">Tél :</strong> +225 05 56 96 78 45</span></div>
-          <div class="info-ligne"><i class="fas fa-globe"></i> <span><strong data-fr="Langues :" data-en="Languages:">Langues :</strong> Français (Courant), Anglais</span></div>
-        </div>
-      </div>
-
-      <div class="apropos-texte reveal d2">
-        <span class="tag" data-fr="Présentation" data-en="Overview">Présentation</span>
-        <h2 class="titre-section" data-fr="Passionné par le <span>code</span>, rigoureux dans la <span>conception</span>" data-en="Passionate about <span>code</span>, rigorous in <span>design</span>">
-          Passionné par le <span>code</span>, rigoureux dans la <span>conception</span>
-        </h2>
-        <p data-fr="Titulaire d'un BTS en Informatique Développement d'Applications (IDA) à l'Institut Supérieur Nanan Thérèse (ISNT) d'Abidjan, je conçois des applications web et logicielles adaptées aux besoins réels des entreprises et des utilisateurs." data-en="Holding an Associate Degree in Application Development (BTS IDA) from ISNT Abidjan, I design web and desktop applications tailored to business and user needs.">
-          Titulaire d'un BTS en Informatique Développement d'Applications (IDA) à l'Institut Supérieur Nanan Thérèse (ISNT) d'Abidjan, je conçois des applications web et logicielles adaptées aux besoins réels des entreprises et des utilisateurs.
-        </p>
-        <p data-fr="Ma formation m'a permis d'acquérir une double compétence : la maîtrise du développement Back-end (bases de données SQL, PHP, programmation logicielle) et une solide sensibilité Front-end / UI-UX (interfaces responsive, maquettage Photoshop & montage vidéo)." data-en="My background provides a balanced skill set: robust backend and database modeling (SQL, PHP, C) combined with creative UI/UX design (responsive web, Photoshop prototypes, video editing).">
-          Ma formation m'a permis d'acquérir une double compétence : la maîtrise du développement Back-end (bases de données SQL, PHP, programmation logicielle) et une solide sensibilité Front-end / UI-UX (interfaces responsive, maquettage Photoshop & montage vidéo).
-        </p>
-        <div class="stats-grille">
-          <div class="stat-item">
-            <div class="stat-nombre">BTS IDA</div>
-            <div class="stat-label" data-fr="Diplôme d'État obtenu" data-en="State degree certified">Diplôme d'État obtenu</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-nombre">100%</div>
-            <div class="stat-label" data-fr="Engagement & Rigueur" data-en="Commitment & Quality">Engagement & Rigueur</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMPÉTENCES -->
+<!-- COMPÉTENCES REELLES -->
 <section id="competences" class="section">
   <div class="container">
-    <div class="comp-entete reveal d1">
-      <span class="tag" data-fr="Mon Savoir-Faire" data-en="My Expertise">Mon Savoir-Faire</span>
-      <h2 class="titre-section" data-fr="Stack <span>Technique</span> & Outils" data-en="Technical <span>Stack</span> & Tools">Stack <span>Technique</span> & Outils</h2>
-      <p class="sous-titre" data-fr="Technologies utilisées pour donner vie à des solutions performantes." data-en="Technologies used to build high-performance applications.">Technologies utilisées pour donner vie à des solutions performantes.</p>
-    </div>
+    <div class="section-tag" data-fr="Expertise Technique" data-en="Technical Expertise">Expertise Technique</div>
+    <h2 class="section-titre" data-fr="Mes <span>Compétences</span> Métier" data-en="My Core <span>Skills</span>">Mes <span>Compétences</span> Métier</h2>
+    <p class="section-desc" data-fr="Un profil complet combinant programmation logicielle, développement web, modélisation de données et création graphique." data-en="A balanced profile combining software programming, web development, relational data modeling, and media design.">
+      Un profil complet combinant programmation logicielle, développement web, modélisation de données et création graphique.
+    </p>
 
-    <div class="comp-grille" style="margin-top:40px;">
-      <!-- Barres -->
-      <div class="reveal d2">
-        <div class="categorie-titre" data-fr="Développement Web & Logiciel" data-en="Web & Software Development">Développement Web & Logiciel</div>
-        <div class="barre-item">
-          <div class="barre-haut"><span class="barre-nom">HTML5 & CSS3</span><span class="barre-pct">90%</span></div>
-          <div class="barre-fond"><div class="barre-remplissage" data-largeur="90%"></div></div>
+    <div class="grille-piliers">
+      
+      <!-- Pilier 1 : Web -->
+      <div class="pilier-card">
+        <div class="pilier-header">
+          <div class="pilier-icon"><i class="fas fa-globe"></i></div>
+          <div>
+            <h3 data-fr="Développement Web" data-en="Web Development">Développement Web</h3>
+            <span style="font-size:0.8rem;color:var(--texte-sombre);" data-fr="Front-End & Back-End" data-en="Full-Stack Technologies">Front-End & Back-End</span>
+          </div>
         </div>
-        <div class="barre-item">
-          <div class="barre-haut"><span class="barre-nom">JavaScript (ES6+)</span><span class="barre-pct">75%</span></div>
-          <div class="barre-fond"><div class="barre-remplissage" data-largeur="75%"></div></div>
-        </div>
-        <div class="barre-item">
-          <div class="barre-haut"><span class="barre-nom">PHP & MySQL</span><span class="barre-pct">70%</span></div>
-          <div class="barre-fond"><div class="barre-remplissage" data-largeur="70%"></div></div>
-        </div>
-        <div class="barre-item">
-          <div class="barre-haut"><span class="barre-nom">Langage C & WinDev</span><span class="barre-pct">65%</span></div>
-          <div class="barre-fond"><div class="barre-remplissage" data-largeur="65%"></div></div>
+        <div class="skills-badges">
+          <span class="skill-chip"><i class="fab fa-html5"></i> HTML5</span>
+          <span class="skill-chip"><i class="fab fa-css3-alt"></i> CSS3</span>
+          <span class="skill-chip"><i class="fab fa-js"></i> JavaScript (ES6)</span>
+          <span class="skill-chip"><i class="fab fa-php"></i> PHP</span>
+          <span class="skill-chip"><i class="fas fa-mobile-alt"></i> Responsive Design</span>
         </div>
       </div>
 
-      <!-- Grille d'outils -->
-      <div class="reveal d3">
-        <div class="categorie-titre" data-fr="Data, Design & Outils" data-en="Data, Design & Workflow">Data, Design & Outils</div>
-        <div class="outils-grille">
-          <div class="outil"><i class="fas fa-database"></i><span>MySQL</span></div>
-          <div class="outil"><i class="fas fa-table"></i><span>MS Access</span></div>
-          <div class="outil"><i class="fab fa-git-alt"></i><span>Git & GitHub</span></div>
-          <div class="outil"><i class="fas fa-code"></i><span>VS Code</span></div>
-          <div class="outil"><i class="fas fa-palette"></i><span>Photoshop / XD</span></div>
-          <div class="outil"><i class="fas fa-video"></i><span>DaVinci Resolve</span></div>
+      <!-- Pilier 2 : Logiciel & Systèmes -->
+      <div class="pilier-card">
+        <div class="pilier-header">
+          <div class="pilier-icon"><i class="fas fa-laptop-code"></i></div>
+          <div>
+            <h3 data-fr="Logiciel & Programmation" data-en="Software Programming">Logiciel & Programmation</h3>
+            <span style="font-size:0.8rem;color:var(--texte-sombre);" data-fr="Système & Logiciels de gestion" data-en="Desktop & Core Algorithms">Système & Logiciels de gestion</span>
+          </div>
+        </div>
+        <div class="skills-badges">
+          <span class="skill-chip"><i class="fas fa-terminal"></i> Langage C</span>
+          <span class="skill-chip"><i class="fab fa-windows"></i> WinDev</span>
+          <span class="skill-chip"><i class="fas fa-sitemap"></i> Algorithmique</span>
+          <span class="skill-chip"><i class="fas fa-cogs"></i> Génie Logiciel</span>
         </div>
       </div>
+
+      <!-- Pilier 3 : Bases de Données & Data -->
+      <div class="pilier-card">
+        <div class="pilier-header">
+          <div class="pilier-icon"><i class="fas fa-database"></i></div>
+          <div>
+            <h3 data-fr="Bases de Données & Data" data-en="Databases & Data Modeling">Bases de Données & Data</h3>
+            <span style="font-size:0.8rem;color:var(--texte-sombre);" data-fr="Modélisation & Administration" data-en="Architecture & Queries">Modélisation & Administration</span>
+          </div>
+        </div>
+        <div class="skills-badges">
+          <span class="skill-chip"><i class="fas fa-server"></i> MySQL</span>
+          <span class="skill-chip"><i class="fas fa-table"></i> Microsoft Access</span>
+          <span class="skill-chip"><i class="fas fa-project-diagram"></i> Méthode Merise (MCD/MLD)</span>
+          <span class="skill-chip"><i class="fas fa-code-branch"></i> Requêtes SQL Avancées</span>
+        </div>
+      </div>
+
+      <!-- Pilier 4 : Design & Média -->
+      <div class="pilier-card">
+        <div class="pilier-header">
+          <div class="pilier-icon"><i class="fas fa-palette"></i></div>
+          <div>
+            <h3 data-fr="UI/UX & Multimédia" data-en="UI/UX & Media Design">UI/UX & Multimédia</h3>
+            <span style="font-size:0.8rem;color:var(--texte-sombre);" data-fr="Prototypage & Création vidéo" data-en="Prototypes & Video Editing">Prototypage & Création vidéo</span>
+          </div>
+        </div>
+        <div class="skills-badges">
+          <span class="skill-chip"><i class="fas fa-image"></i> Adobe Photoshop</span>
+          <span class="skill-chip"><i class="fas fa-vector-square"></i> Adobe XD</span>
+          <span class="skill-chip"><i class="fas fa-film"></i> DaVinci Resolve</span>
+          <span class="skill-chip"><i class="fab fa-git-alt"></i> Git & GitHub</span>
+          <span class="skill-chip"><i class="fas fa-code"></i> VS Code</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- PROJETS -->
-<section id="projets" class="section">
+<!-- PROJETS RÉELS GITHUB -->
+<section id="projets" class="section" style="background: rgba(13, 21, 39, 0.4);">
   <div class="container">
-    <div style="text-align:center;max-width:540px;margin:0 auto 50px;" class="reveal d1">
-      <span class="tag" data-fr="Portfolio" data-en="Portfolio">Portfolio</span>
-      <h2 class="titre-section" data-fr="Projets <span>Récents</span>" data-en="Featured <span>Projects</span>">Projets <span>Récents</span></h2>
-      <p class="sous-titre" data-fr="Aperçu des solutions conçues et développées." data-en="Overview of applications and solutions built.">Aperçu des solutions conçues et développées.</p>
-    </div>
+    <div class="section-tag" data-fr="Dépôts GitHub" data-en="GitHub Repositories">Dépôts GitHub</div>
+    <h2 class="section-titre" data-fr="Projets <span>sur mon GitHub</span>" data-en="Projects <span>on GitHub</span>">Projets <span>sur mon GitHub</span></h2>
+    <p class="section-desc" data-fr="Découvrez les projets personnels et académiques disponibles sur mon profil GitHub baks012." data-en="Explore the personal and academic projects directly published on my GitHub profile baks012.">
+      Découvrez les projets personnels et académiques disponibles sur mon profil GitHub baks012.
+    </p>
 
-    <div class="projets-grille">
-      <!-- Projet 1 -->
-      <div class="carte-projet reveal d1">
-        <div class="projet-image"><i class="fas fa-id-card"></i></div>
-        <div class="projet-corps">
-          <div class="projet-tags"><span class="p-tag">HTML5</span><span class="p-tag">CSS3</span><span class="p-tag">JavaScript</span></div>
-          <h3 class="projet-titre" data-fr="Mon Portfolio Personnel" data-en="Personal Portfolio">Mon Portfolio Personnel</h3>
-          <p class="projet-desc" data-fr="Site vitrine bilingue (FR/EN) avec mode responsive, animations fluides et interface moderne pour valoriser mes réalisations." data-en="Bilingual responsive portfolio with smooth animations and interactive styling.">
-            Site vitrine bilingue (FR/EN) avec mode responsive, animations fluides et interface moderne pour valoriser mes réalisations.
+    <div class="projets-layout">
+      
+      <!-- Projet 1 : Mon-Portfolio -->
+      <div class="carte-projet">
+        <div class="projet-header-banner">
+          <i class="fas fa-laptop-code"></i>
+        </div>
+        <div class="projet-body">
+          <div class="projet-tags">
+            <span class="tag-techno">HTML5</span>
+            <span class="tag-techno">CSS3</span>
+            <span class="tag-techno">JavaScript</span>
+            <span class="tag-techno">Vercel</span>
+          </div>
+          <h3 data-fr="Mon-Portfolio" data-en="Personal Portfolio">Mon-Portfolio</h3>
+          <p data-fr="Site web personnel bilingue (FR/EN) avec animations soignées, design responsive et intégration complète de mon profil professionnel." data-en="Bilingual personal portfolio website with smooth animations, responsive layout, and full professional profile showcase.">
+            Site web personnel bilingue (FR/EN) avec animations soignées, design responsive et intégration complète de mon profil professionnel.
           </p>
-          <div class="projet-pied">
-            <a href="https://github.com/baks012/Mon-Portfolio" target="_blank" class="projet-lien"><i class="fab fa-github"></i> <span data-fr="Code source" data-en="Source code">Code source</span></a>
-            <span class="projet-statut" data-fr="En ligne" data-en="Live">En ligne</span>
+          <div class="projet-footer">
+            <a href="https://github.com/baks012/Mon-Portfolio" target="_blank" class="projet-link">
+              <i class="fab fa-github"></i> <span data-fr="Voir sur GitHub" data-en="View on GitHub">Voir sur GitHub</span>
+            </a>
+            <span style="font-size:0.75rem;color:#34d399;font-weight:600;" data-fr="● En Production" data-en="● Live">● En Production</span>
           </div>
         </div>
       </div>
 
-      <!-- Projet 2 -->
-      <div class="carte-projet reveal d2">
-        <div class="projet-image"><i class="fas fa-utensils"></i></div>
-        <div class="projet-corps">
-          <div class="projet-tags"><span class="p-tag">PHP</span><span class="p-tag">MySQL</span><span class="p-tag">JavaScript</span></div>
-          <h3 class="projet-titre" data-fr="Application Web Restauration" data-en="Restaurant Web App">Application Web Restauration</h3>
-          <p class="projet-desc" data-fr="Plateforme web pour la commande en ligne, la gestion des menus et le suivi des réservations pour le secteur de la restauration." data-en="Web application for online food ordering, menu management, and reservation tracking.">
-            Plateforme web pour la commande en ligne, la gestion des menus et le suivi des réservations pour le secteur de la restauration.
+      <!-- Projet 2 : Plateforme Restauration -->
+      <div class="carte-projet">
+        <div class="projet-header-banner">
+          <i class="fas fa-utensils"></i>
+        </div>
+        <div class="projet-body">
+          <div class="projet-tags">
+            <span class="tag-techno">PHP</span>
+            <span class="tag-techno">MySQL</span>
+            <span class="tag-techno">JavaScript</span>
+            <span class="tag-techno">CSS3</span>
+          </div>
+          <h3 data-fr="Application Web Restauration" data-en="Restaurant Web App">Application Web Restauration</h3>
+          <p data-fr="Plateforme web dynamique pour la gestion de commandes en ligne, présentation de menus et suivi des réservations pour la restauration." data-en="Dynamic web platform for online order management, menu display, and table booking for restaurants.">
+            Plateforme web dynamique pour la gestion de commandes en ligne, présentation de menus et suivi des réservations pour la restauration.
           </p>
-          <div class="projet-pied">
-            <a href="https://github.com/baks012" target="_blank" class="projet-lien"><i class="fab fa-github"></i> <span data-fr="Voir sur GitHub" data-en="View on GitHub">Voir sur GitHub</span></a>
-            <span class="projet-statut" data-fr="Fonctionnel" data-en="Functional">Fonctionnel</span>
+          <div class="projet-footer">
+            <a href="https://github.com/baks012" target="_blank" class="projet-link">
+              <i class="fab fa-github"></i> <span data-fr="Voir sur GitHub" data-en="View on GitHub">Voir sur GitHub</span>
+            </a>
+            <span style="font-size:0.75rem;color:var(--bleu-cyan);font-weight:600;" data-fr="● Fonctionnel" data-en="● Functional">● Fonctionnel</span>
           </div>
         </div>
       </div>
 
-      <!-- Projet 3 -->
-      <div class="carte-projet reveal d3">
-        <div class="projet-image"><i class="fas fa-users-cog"></i></div>
-        <div class="projet-corps">
-          <div class="projet-tags"><span class="p-tag">MS Access</span><span class="p-tag">SQL</span><span class="p-tag">Merise</span></div>
-          <h3 class="projet-titre" data-fr="Système de Gestion du Personnel" data-en="HR & Staff Management System">Système de Gestion du Personnel</h3>
-          <p class="projet-desc" data-fr="Modélisation et conception d'une base de données d'administration RH : formulaires de saisie, suivi des présences et états d'impression." data-en="Relational database design for staff administration: data entry forms, attendance tracking, and reporting.">
-            Modélisation et conception d'une base de données d'administration RH : formulaires de saisie, suivi des présences et états d'impression.
+      <!-- Projet 3 : Gestion Personnel Access -->
+      <div class="carte-projet">
+        <div class="projet-header-banner">
+          <i class="fas fa-users-cog"></i>
+        </div>
+        <div class="projet-body">
+          <div class="projet-tags">
+            <span class="tag-techno">MS Access</span>
+            <span class="tag-techno">SQL</span>
+            <span class="tag-techno">Merise</span>
+          </div>
+          <h3 data-fr="Gestion du Personnel & Données" data-en="Staff Database Management">Gestion du Personnel & Données</h3>
+          <p data-fr="Système d'administration RH modélisé sous Merise : gestion des employés, formulaires de saisie automatisés et rapports d'analyse." data-en="Relational database for employee management: automated input forms, presence tracking, and customized reports.">
+            Système d'administration RH modélisé sous Merise : gestion des employés, formulaires de saisie automatisés et rapports d'analyse.
           </p>
-          <div class="projet-pied">
-            <a href="https://github.com/baks012" target="_blank" class="projet-lien"><i class="fab fa-github"></i> <span data-fr="Voir sur GitHub" data-en="View on GitHub">Voir sur GitHub</span></a>
-            <span class="projet-statut" data-fr="Terminé" data-en="Completed">Terminé</span>
+          <div class="projet-footer">
+            <a href="https://github.com/baks012" target="_blank" class="projet-link">
+              <i class="fab fa-github"></i> <span data-fr="Voir sur GitHub" data-en="View on GitHub">Voir sur GitHub</span>
+            </a>
+            <span style="font-size:0.75rem;color:var(--bleu-cyan);font-weight:600;" data-fr="● Terminé" data-en="● Completed">● Terminé</span>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section id="services" class="section">
+<!-- PARCOURS ACADÉMIQUE -->
+<section id="parcours" class="section">
   <div class="container">
-    <div style="text-align:center;max-width:540px;margin:0 auto 50px;" class="reveal d1">
-      <span class="tag" data-fr="Services" data-en="Services">Services</span>
-      <h2 class="titre-section" data-fr="Ce Que Je Peux <span>Apporter</span>" data-en="What I <span>Deliver</span>">Ce Que Je Peux <span>Apporter</span></h2>
-      <p class="sous-titre" data-fr="Des compétences pratiques au service de votre projet." data-en="Practical development skills for your digital goals.">Des compétences pratiques au service de votre projet.</p>
+    <div style="text-align:center;">
+      <div class="section-tag" data-fr="Diplômes & Éducation" data-en="Education">Diplômes & Éducation</div>
+      <h2 class="section-titre" data-fr="Mon <span>Parcours</span> Académique" data-en="Academic <span>Background</span>">Mon <span>Parcours</span> Académique</h2>
     </div>
 
-    <div class="services-grille">
-      <div class="carte-service reveal d1">
-        <div class="service-icone"><i class="fas fa-laptop-code"></i></div>
-        <h3 data-fr="Développement Web Responsive" data-en="Responsive Web Development">Développement Web Responsive</h3>
-        <p data-fr="Création de sites vitrines et plateformes web modernes, rapides, esthétiques et optimisés sur mobile, tablette et PC." data-en="Building fast, modern, and cross-device websites optimized for search engines and user experience.">Création de sites vitrines et plateformes web modernes, rapides, esthétiques et optimisés sur mobile, tablette et PC.</p>
+    <div class="timeline">
+      
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-annee">2024 — 2026</div>
+          <div class="timeline-titre" data-fr="Brevet de Technicien Supérieur (BTS) — Informatique IDA" data-en="Associate Degree (BTS) — Software Development (IDA)">
+            Brevet de Technicien Supérieur (BTS) — Informatique IDA
+          </div>
+          <div class="timeline-lieu">
+            <strong>Institut Supérieur Nanan Thérèse (ISNT)</strong> — Le Plateau, Abidjan
+          </div>
+          <p style="margin-top:10px;font-size:0.88rem;color:var(--texte-mute);" data-fr="Spécialisation en développement d'applications, algorithmique avancée, conception Merise, bases de données relationnelles (SQL) et programmation web." data-en="Specialized in application development, advanced algorithms, Merise database architecture, SQL, and modern web engineering.">
+            Spécialisation en développement d'applications, algorithmique avancée, conception Merise, bases de données relationnelles (SQL) et programmation web.
+          </p>
+        </div>
       </div>
-      <div class="carte-service reveal d2">
-        <div class="service-icone"><i class="fas fa-database"></i></div>
-        <h3 data-fr="Bases de Données & Logiciel" data-en="Database & Desktop Solutions">Bases de Données & Logiciel</h3>
-        <p data-fr="Modélisation relationnelle (Merise), création de bases de données SQL / Access et développement d'outils de gestion." data-en="Database modeling (Merise), SQL / Access implementation, and internal staff management software.">Modélisation relationnelle (Merise), création de bases de données SQL / Access et développement d'outils de gestion.</p>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-annee">2023 — 2024</div>
+          <div class="timeline-titre" data-fr="Baccalauréat Général — Série D" data-en="Scientific High School Diploma (Series D)">
+            Baccalauréat Général — Série D
+          </div>
+          <div class="timeline-lieu">Abidjan, Côte d'Ivoire</div>
+          <p style="margin-top:10px;font-size:0.88rem;color:var(--texte-mute);" data-fr="Formation scientifique développant la rigueur logique, l'analyse et la méthodologie de résolution de problèmes." data-en="Scientific background focused on mathematical logic, critical analysis, and structured problem-solving.">
+            Formation scientifique développant la rigueur logique, l'analyse et la méthodologie de résolution de problèmes.
+          </p>
+        </div>
       </div>
-      <div class="carte-service reveal d3">
-        <div class="service-icone"><i class="fas fa-photo-video"></i></div>
-        <h3 data-fr="UI/UX & Création Média" data-en="UI/UX & Media Creation">UI/UX & Création Média</h3>
-        <p data-fr="Conception graphique de maquettes sous Photoshop / XD et montage de vidéos dynamiques sous DaVinci Resolve." data-en="Visual prototyping with Photoshop / XD and engaging video editing using DaVinci Resolve.">Conception graphique de maquettes sous Photoshop / XD et montage de vidéos dynamiques sous DaVinci Resolve.</p>
-      </div>
+
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact" class="section">
+<!-- CONTACT RAPIDE -->
+<section id="contact" class="section" style="background: rgba(13, 21, 39, 0.4);">
   <div class="container">
-    <div class="contact-grille">
-      <div class="contact-gauche reveal d1">
-        <span class="tag" data-fr="Contact" data-en="Contact">Contact</span>
-        <h2 class="titre-section" data-fr="Discutons de votre <span>projet</span>" data-en="Let's build something <span>together</span>">Discutons de votre <span>projet</span></h2>
-        <p data-fr="Vous avez un projet web, une opportunité d'embauche ou besoin d'un développeur polyvalent à Abidjan ou en remote ? Écrivez-moi directement !" data-en="Looking for a reliable developer for an opportunity, contract or project in Abidjan or remotely? Reach out anytime!">
-          Vous avez un projet web, une opportunité d'embauche ou besoin d'un développeur polyvalent à Abidjan ou en remote ? Écrivez-moi directement !
+    <div class="contact-wrapper">
+      
+      <div>
+        <div class="section-tag" data-fr="Coordonnées" data-en="Get in touch">Coordonnées</div>
+        <h2 class="section-titre" data-fr="Entrons en <span>Contact</span>" data-en="Let's Start a <span>Conversation</span>">Entrons en <span>Contact</span></h2>
+        <p class="section-desc" data-fr="Disponible pour échanger sur vos projets informatiques, opportunités professionnelles ou collaborations à Abidjan et à distance." data-en="Available for software opportunities, contracts, or projects in Abidjan or remotely. Feel free to contact me directly.">
+          Disponible pour échanger sur vos projets informatiques, opportunités professionnelles ou collaborations à Abidjan et à distance.
         </p>
-        <div class="contact-liste">
-          <a href="https://wa.me/2250556967845" target="_blank" class="contact-ligne">
-            <div class="contact-icone"><i class="fab fa-whatsapp"></i></div>
-            <div>
-              <div class="cl-label">WhatsApp Direct</div>
-              <div class="cl-val">+225 05 56 96 78 45</div>
-            </div>
-          </a>
-          <a href="mailto:sorybakayoko012@gmail.com" class="contact-ligne">
-            <div class="contact-icone"><i class="fas fa-envelope"></i></div>
-            <div>
-              <div class="cl-label">Email</div>
-              <div class="cl-val">sorybakayoko012@gmail.com</div>
-            </div>
-          </a>
-          <div class="contact-ligne">
-            <div class="contact-icone"><i class="fas fa-map-marker-alt"></i></div>
-            <div>
-              <div class="cl-label" data-fr="Localisation" data-en="Location">Localisation</div>
-              <div class="cl-val">Abidjan, Côte d'Ivoire</div>
-            </div>
-          </div>
-        </div>
 
-        <div class="reseaux">
-          <a href="https://linkedin.com/in/sory-bakayoko-1092523b9" target="_blank" class="reseau-lien" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="https://github.com/baks012" target="_blank" class="reseau-lien" aria-label="GitHub"><i class="fab fa-github"></i></a>
-          <a href="https://wa.me/2250556967845" target="_blank" class="reseau-lien" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <div style="margin-top:28px;">
+          
+          <a href="https://wa.me/2250556967845" target="_blank" class="contact-item-card">
+            <div class="contact-icon-box"><i class="fab fa-whatsapp"></i></div>
+            <div class="contact-meta">
+              <span>WhatsApp Direct</span>
+              <strong>+225 05 56 96 78 45</strong>
+            </div>
+          </a>
+
+          <a href="mailto:sorybakayoko012@gmail.com" class="contact-item-card">
+            <div class="contact-icon-box"><i class="fas fa-envelope"></i></div>
+            <div class="contact-meta">
+              <span>Email</span>
+              <strong>sorybakayoko012@gmail.com</strong>
+            </div>
+          </a>
+
+          <a href="https://linkedin.com/in/sory-bakayoko-1092523b9" target="_blank" class="contact-item-card">
+            <div class="contact-icon-box"><i class="fab fa-linkedin-in"></i></div>
+            <div class="contact-meta">
+              <span>LinkedIn</span>
+              <strong>linkedin.com/in/sory-bakayoko-1092523b9</strong>
+            </div>
+          </a>
+
         </div>
       </div>
 
-      <div class="carte-profil reveal d2" style="text-align:left;">
-        <form class="formulaire" action="mailto:sorybakayoko012@gmail.com" method="post" enctype="text/plain">
-          <div class="form-ligne">
-            <div class="form-groupe">
-              <label data-fr="Votre Nom" data-en="Your Name">Votre Nom</label>
-              <input type="text" name="nom" required placeholder="Ex: Jean Kouassi" />
-            </div>
-            <div class="form-groupe">
-              <label>Email</label>
-              <input type="email" name="email" required placeholder="exemple@domaine.com" />
-            </div>
+      <!-- Formulaire de contact direct -->
+      <div class="form-box">
+        <form action="mailto:sorybakayoko012@gmail.com" method="post" enctype="text/plain">
+          <div class="form-row">
+            <label data-fr="Votre Nom & Prénoms" data-en="Your Full Name">Votre Nom & Prénoms</label>
+            <input type="text" name="nom" required placeholder="Ex: Jean Kouassi" />
           </div>
-          <div class="form-groupe">
+          <div class="form-row">
+            <label>Votre Adresse Email</label>
+            <input type="email" name="email" required placeholder="exemple@entreprise.com" />
+          </div>
+          <div class="form-row">
             <label data-fr="Objet du message" data-en="Subject">Objet du message</label>
-            <input type="text" name="sujet" required placeholder="Ex: Opportunité professionnelle / Devis" />
+            <input type="text" name="sujet" required placeholder="Ex: Opportunité professionnelle / Projet" />
           </div>
-          <div class="form-groupe">
+          <div class="form-row">
             <label data-fr="Message" data-en="Message">Message</label>
-            <textarea name="message" rows="5" required placeholder="Décrivez brièvement votre besoin..."></textarea>
+            <textarea name="message" rows="5" required placeholder="Bonjour Bakayoko Sory, je vous contacte au sujet de..."></textarea>
           </div>
-          <button type="submit" class="btn btn-bleu" style="justify-content:center;width:100%;">
+          <button type="submit" class="btn btn-principal" style="width:100%;justify-content:center;">
             <i class="fas fa-paper-plane"></i> <span data-fr="Envoyer le Message" data-en="Send Message">Envoyer le Message</span>
           </button>
         </form>
       </div>
+
     </div>
   </div>
 </section>
@@ -587,132 +868,82 @@
 <!-- FOOTER -->
 <footer>
   <div class="container">
-    <div class="footer-logo">Bakayoko Sory<span>.</span>dev</div>
-    <p>© 2026 Bakayoko Sory — <span data-fr="Tous droits réservés. Conçu avec passion." data-en="All rights reserved. Built with passion.">Tous droits réservés. Conçu avec passion.</span></p>
+    <p>© 2026 <strong>Bakayoko Sory</strong> — <span data-fr="Développeur Web & Logiciel. Tous droits réservés." data-en="Software & Web Developer. All rights reserved.">Développeur Web & Logiciel. Tous droits réservés.</span></p>
   </div>
 </footer>
 
-<!-- SCRIPTS -->
+<!-- SCRIPTS INTERACTIFS -->
 <script>
-  // Effet machine à écrire (Typing effect)
-  const rolesFR = [
-    "Développeur Web & Applications",
+  // Animation d'écriture dynamique (Typing Text)
+  const textesFR = [
+    "Développeur Web & Logiciel",
     "Titulaire du BTS Informatique (IDA)",
-    "Concepteur de solutions numériques",
-    "Disponible pour vos opportunités"
+    "Spécialiste Bases de Données & SQL",
+    "Concepteur de Solutions Numériques"
   ];
-  const rolesEN = [
-    "Web & Application Developer",
+  const textesEN = [
+    "Web & Software Developer",
     "BTS IDA Degree Graduate",
-    "Digital Solutions Designer",
-    "Available for opportunities"
+    "Relational Database Specialist",
+    "Digital Solutions Engineer"
   ];
 
-  let langueActuelle = 'fr';
-  let roleIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
-  const roleElem = document.getElementById("roleTexte");
+  let langueCourante = 'fr';
+  let indexTexte = 0;
+  let indexCar = 0;
+  let effacement = false;
+  const cible = document.getElementById("typingTarget");
 
-  function typeEffect() {
-    const list = langueActuelle === 'fr' ? rolesFR : rolesEN;
-    const currentRole = list[roleIndex % list.length];
+  function animerTexte() {
+    const tab = langueCourante === 'fr' ? textesFR : textesEN;
+    const mot = tab[indexTexte % tab.length];
 
-    if (isDeleting) {
-      roleElem.textContent = currentRole.substring(0, charIndex - 1);
-      charIndex--;
+    if (effacement) {
+      cible.textContent = mot.substring(0, indexCar - 1);
+      indexCar--;
     } else {
-      roleElem.textContent = currentRole.substring(0, charIndex + 1);
-      charIndex++;
+      cible.textContent = mot.substring(0, indexCar + 1);
+      indexCar++;
     }
 
-    let delay = isDeleting ? 40 : 90;
-    if (!isDeleting && charIndex === currentRole.length) {
-      delay = 1600;
-      isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      roleIndex++;
-      delay = 400;
+    let delai = effacement ? 40 : 85;
+    if (!effacement && indexCar === mot.length) {
+      delai = 1800;
+      effacement = true;
+    } else if (effacement && indexCar === 0) {
+      effacement = false;
+      indexTexte++;
+      delai = 400;
     }
-    setTimeout(typeEffect, delay);
+    setTimeout(animerTexte, delai);
   }
-  typeEffect();
+  animerTexte();
 
-  // Changement de langue bilingue (FR / EN)
+  // Commutateur de langue FR / EN
   function changerLangue(lang) {
-    langueActuelle = lang;
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('actif', btn.textContent.trim().toLowerCase() === lang);
+    langueCourante = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('actif', b.textContent.trim().toLowerCase() === lang);
     });
 
     document.querySelectorAll('[data-' + lang + ']').forEach(el => {
       const val = el.getAttribute('data-' + lang);
-      if (el.tagName === 'SPAN' || el.tagName === 'A' || el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'P' || el.tagName === 'DIV' || el.tagName === 'LABEL') {
+      if (['SPAN', 'A', 'H1', 'H2', 'H3', 'P', 'DIV', 'LABEL'].includes(el.tagName)) {
         el.innerHTML = val;
       }
     });
   }
 
-  // Animation barres de progression
+  // Effet navbar collante
   window.addEventListener('scroll', () => {
-    const compSection = document.getElementById('competences');
-    const rect = compSection.getBoundingClientRect();
-    if (rect.top <= window.innerHeight * 0.75) {
-      document.querySelectorAll('.barre-remplissage').forEach(bar => {
-        bar.style.width = bar.getAttribute('data-largeur');
-      });
-    }
-
-    // Navbar collante
     const nav = document.getElementById('navbar');
-    if (window.scrollY > 50) {
+    if (window.scrollY > 40) {
       nav.classList.add('collant');
     } else {
       nav.classList.remove('collant');
     }
-
-    // Reveal on scroll
-    document.querySelectorAll('.reveal').forEach(el => {
-      if (el.getBoundingClientRect().top < window.innerHeight - 80) {
-        el.classList.add('visible');
-      }
-    });
-  });
-
-  // Déclencheur initial des reveals visibles
-  document.querySelectorAll('.reveal').forEach(el => {
-    if (el.getBoundingClientRect().top < window.innerHeight - 50) {
-      el.classList.add('visible');
-    }
-  });
-
-  // Menu mobile
-  const hamburger = document.getElementById('hamburger');
-  const menuMobile = document.getElementById('menuMobile');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('ouvert');
-    menuMobile.classList.toggle('ouvert');
-  });
-
-  menuMobile.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      hamburger.classList.remove('ouvert');
-      menuMobile.classList.remove('ouvert');
-    });
-  });
-
-  // Curseur interactif
-  const curseur = document.getElementById('curseur');
-  const cercle = document.getElementById('curseurCercle');
-  window.addEventListener('mousemove', e => {
-    curseur.style.left = e.clientX + 'px';
-    curseur.style.top = e.clientY + 'px';
-    setTimeout(() => {
-      cercle.style.left = (e.clientX - 18) + 'px';
-      cercle.style.top = (e.clientY - 18) + 'px';
-    }, 60);
   });
 </script>
+
 </body>
 </html>
