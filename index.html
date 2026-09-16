@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bakayoko Sory — Développeur Web & Logiciel</title>
   
-  <!-- Polices Google Fonts -->
+  <!-- Polices Google Fonts Premium -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
@@ -15,19 +15,25 @@
 
   <style>
     :root {
-      --bg-principal: #070b14;
-      --bg-secondaire: #0d1527;
-      --carte: rgba(16, 26, 48, 0.7);
-      --carte-bordure: rgba(56, 130, 246, 0.16);
-      --carte-hover: rgba(22, 36, 68, 0.9);
+      --bg-page: #f8fafc;
+      --bg-carte: #ffffff;
+      --bg-carte-alt: #f1f5f9;
+      --bg-noir: #0f172a;
       
-      --bleu-eclat: #2563eb;
-      --bleu-cyan: #38bdf8;
+      --bleu: #2563eb;
+      --bleu-fonce: #1d4ed8;
+      --bleu-clair: #38bdf8;
+      --bleu-subtil: rgba(37, 99, 235, 0.08);
       
-      --texte-blanc: #f8fafc;
-      --texte-mute: #94a3b8;
-      --texte-sombre: #64748b;
+      --texte-noir: #0f172a;
+      --texte-corps: #334155;
+      --texte-mute: #64748b;
+      --texte-blanc: #ffffff;
       
+      --bordure: rgba(37, 99, 235, 0.15);
+      --bordure-legere: #e2e8f0;
+      --ombre: 0 12px 32px rgba(15, 23, 42, 0.06);
+      --ombre-forte: 0 20px 40px rgba(37, 99, 235, 0.15);
       --rayon: 18px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -36,95 +42,104 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-principal);
-      color: var(--texte-blanc);
+      background-color: var(--bg-page);
+      color: var(--texte-corps);
       overflow-x: hidden;
       line-height: 1.6;
     }
 
-    ::selection { background: var(--bleu-eclat); color: #fff; }
+    ::selection { background: var(--bleu); color: #fff; }
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: var(--bleu-eclat); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: var(--bleu); border-radius: 10px; }
 
+    /* Motif géométrique discret d'arrière-plan */
     .bg-grille {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
       background-image: 
-        linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
-      background-size: 45px 45px;
+        linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
       pointer-events: none;
       z-index: 0;
     }
 
     .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-    .section { padding: 110px 0; }
+    .section { padding: 100px 0; }
 
+    /* Typographie */
     .section-tag {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--bleu-cyan);
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      padding: 6px 14px;
+      color: var(--bleu);
+      background: var(--bleu-subtil);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      padding: 6px 16px;
       border-radius: 99px;
       margin-bottom: 16px;
     }
     .section-titre {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      font-weight: 700;
+      font-size: clamp(2.1rem, 4vw, 2.9rem);
+      font-weight: 800;
+      color: var(--texte-noir);
       line-height: 1.2;
       margin-bottom: 16px;
     }
-    .section-titre span {
-      background: linear-gradient(135deg, var(--bleu-cyan), var(--bleu-eclat));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    .section-titre span { color: var(--bleu); }
     .section-desc {
       font-size: 1.05rem;
       color: var(--texte-mute);
-      max-width: 580px;
+      max-width: 600px;
     }
 
+    /* Boutons */
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 10px;
       padding: 13px 28px;
       border-radius: 50px;
-      font-size: 0.92rem;
+      font-size: 0.94rem;
       font-weight: 600;
       text-decoration: none;
       transition: var(--transition);
       cursor: pointer;
       border: none;
     }
-    .btn-principal {
-      background: linear-gradient(135deg, var(--bleu-eclat), #1d4ed8);
+    .btn-bleu {
+      background: var(--bleu);
       color: #fff;
-      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+      box-shadow: 0 4px 18px rgba(37, 99, 235, 0.35);
     }
-    .btn-principal:hover {
+    .btn-bleu:hover {
+      background: var(--bleu-fonce);
       transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(37, 99, 235, 0.6);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
     }
-    .btn-secondaire {
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--texte-blanc);
-      border: 1px solid var(--carte-bordure);
-      backdrop-filter: blur(10px);
+    .btn-noir {
+      background: var(--bg-noir);
+      color: #fff;
     }
-    .btn-secondaire:hover {
-      border-color: var(--bleu-cyan);
-      color: var(--bleu-cyan);
+    .btn-noir:hover {
+      background: #1e293b;
+      transform: translateY(-3px);
+    }
+    .btn-vide {
+      background: #fff;
+      color: var(--texte-noir);
+      border: 1px solid var(--bordure-legere);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .btn-vide:hover {
+      border-color: var(--bleu);
+      color: var(--bleu);
       transform: translateY(-3px);
     }
 
@@ -133,14 +148,15 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 1000;
-      padding: 20px 0;
+      padding: 18px 0;
       transition: var(--transition);
     }
     nav.collant {
-      background: rgba(7, 11, 20, 0.88);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(56, 130, 246, 0.12);
-      padding: 14px 0;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      padding: 12px 0;
     }
     .nav-contenu {
       display: flex;
@@ -149,134 +165,132 @@
     }
     .logo {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 800;
       text-decoration: none;
-      color: #fff;
+      color: var(--texte-noir);
     }
-    .logo span { color: var(--bleu-cyan); }
+    .logo span { color: var(--bleu); }
     .nav-items { display: flex; align-items: center; gap: 28px; list-style: none; }
     .nav-items a {
-      color: var(--texte-mute);
+      color: var(--texte-corps);
       font-size: 0.9rem;
-      font-weight: 500;
+      font-weight: 600;
       text-decoration: none;
       transition: var(--transition);
     }
-    .nav-items a:hover { color: #fff; }
+    .nav-items a:hover { color: var(--bleu); }
 
-    .lang-switcher {
+    .lang-switch {
       display: flex;
-      gap: 4px;
-      background: rgba(16, 26, 48, 0.8);
-      border: 1px solid var(--carte-bordure);
+      gap: 3px;
+      background: #e2e8f0;
       border-radius: 99px;
       padding: 3px;
     }
     .lang-btn {
       background: transparent;
       border: none;
-      color: var(--texte-sombre);
-      font-size: 0.76rem;
+      color: var(--texte-mute);
+      font-size: 0.78rem;
       font-weight: 700;
       padding: 5px 12px;
       border-radius: 99px;
       cursor: pointer;
       transition: var(--transition);
     }
-    .lang-btn.actif { background: var(--bleu-eclat); color: #fff; }
+    .lang-btn.actif { background: var(--bleu); color: #fff; }
 
-    /* HERO */
-    #accueil { min-height: 95vh; display: flex; align-items: center; padding-top: 100px; }
+    /* HERO SECTION */
+    #accueil { min-height: 92vh; display: flex; align-items: center; padding-top: 90px; }
     .hero-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
     .hero-statut {
       display: inline-flex;
       align-items: center;
       gap: 10px;
       padding: 6px 16px;
-      background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.25);
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
       border-radius: 99px;
       font-size: 0.82rem;
-      color: #34d399;
-      font-weight: 600;
-      margin-bottom: 24px;
+      color: #059669;
+      font-weight: 700;
+      margin-bottom: 22px;
     }
-    .pulsation-point {
+    .point-pulsant {
       width: 8px; height: 8px;
       background: #10b981;
       border-radius: 50%;
       box-shadow: 0 0 10px #10b981;
       animation: pulsate 1.6s infinite ease-in-out;
     }
-    @keyframes pulsate {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
-    }
+    @keyframes pulsate { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+
     .hero-titre-h1 {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(2.4rem, 5vw, 3.8rem);
       font-weight: 800;
+      color: var(--texte-noir);
       line-height: 1.12;
       margin-bottom: 12px;
     }
     .role-dynamique {
       font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--bleu-cyan);
+      font-weight: 700;
+      color: var(--bleu);
       min-height: 1.8em;
       margin-bottom: 20px;
     }
     .curseur-bar {
       display: inline-block;
       width: 2px; height: 1.1em;
-      background: var(--bleu-cyan);
+      background: var(--bleu);
       margin-left: 4px;
       vertical-align: middle;
       animation: clignote 0.8s infinite;
     }
     @keyframes clignote { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-    .hero-presentation {
-      color: var(--texte-mute);
+    .hero-desc {
+      color: var(--texte-corps);
       font-size: 1.05rem;
-      margin-bottom: 34px;
-      max-width: 500px;
+      margin-bottom: 32px;
+      max-width: 520px;
     }
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 36px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 34px; }
     .hero-tags { display: flex; gap: 12px; flex-wrap: wrap; }
     .mini-badge {
       display: flex; align-items: center; gap: 8px;
-      background: var(--carte);
-      border: 1px solid var(--carte-bordure);
+      background: #fff;
+      border: 1px solid var(--bordure-legere);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
       padding: 8px 16px;
       border-radius: 99px;
       font-size: 0.82rem;
-      color: var(--texte-mute);
+      color: var(--texte-corps);
+      font-weight: 600;
     }
-    .mini-badge i { color: var(--bleu-cyan); }
+    .mini-badge i { color: var(--bleu); }
 
     /* Photo de Bakayoko Sory */
     .hero-illustration { display: flex; justify-content: center; position: relative; }
-    .hero-card-visuel {
+    .hero-cadre-photo {
       position: relative;
       width: 320px; height: 380px;
       border-radius: 24px;
-      background: linear-gradient(145deg, #101c33, #070d1a);
-      border: 2px solid rgba(56, 189, 248, 0.3);
-      box-shadow: 0 10px 50px rgba(37, 99, 235, 0.25);
+      background: #fff;
+      border: 4px solid #fff;
+      box-shadow: 0 20px 45px rgba(37, 99, 235, 0.16), 0 0 0 1px rgba(37, 99, 235, 0.15);
       overflow: hidden;
       display: flex; align-items: center; justify-content: center;
     }
-    .hero-card-visuel img {
+    .hero-cadre-photo img {
       width: 100%; height: 100%; object-fit: cover; object-position: center top;
       transition: var(--transition);
     }
-    .hero-card-visuel:hover img {
-      transform: scale(1.03);
-    }
+    .hero-cadre-photo:hover img { transform: scale(1.03); }
 
-    /* PILIERS DE COMPÉTENCES */
+    /* COMPÉTENCES EN PILIERS */
     .grille-piliers {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -284,43 +298,43 @@
       margin-top: 40px;
     }
     .pilier-card {
-      background: var(--carte);
-      border: 1px solid var(--carte-bordure);
+      background: var(--bg-carte);
+      border: 1px solid var(--bordure-legere);
       border-radius: var(--rayon);
       padding: 32px;
+      box-shadow: var(--ombre);
       transition: var(--transition);
-      backdrop-filter: blur(10px);
     }
     .pilier-card:hover {
-      background: var(--carte-hover);
-      border-color: var(--bleu-cyan);
       transform: translateY(-5px);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+      border-color: var(--bleu);
+      box-shadow: var(--ombre-forte);
     }
-    .pilier-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .pilier-header { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
     .pilier-icon {
-      width: 50px; height: 50px;
+      width: 52px; height: 52px;
       border-radius: 14px;
-      background: rgba(37, 99, 235, 0.12);
-      border: 1px solid rgba(37, 99, 235, 0.25);
+      background: var(--bleu-subtil);
+      border: 1px solid rgba(37, 99, 235, 0.2);
       display: flex; align-items: center; justify-content: center;
       font-size: 1.4rem;
-      color: var(--bleu-cyan);
+      color: var(--bleu);
     }
-    .skills-badges { display: flex; flex-wrap: wrap; gap: 8px; }
-    .skill-chip {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 6px 14px;
+    .pilier-header h3 { font-size: 1.2rem; font-weight: 700; color: var(--texte-noir); }
+    .skills-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      background: var(--bg-carte-alt);
+      border: 1px solid #e2e8f0;
+      padding: 7px 15px;
       border-radius: 8px;
-      font-size: 0.83rem;
-      font-weight: 500;
-      color: #e2e8f0;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--texte-noir);
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
     }
-    .skill-chip i { color: var(--bleu-cyan); font-size: 0.8rem; }
+    .chip i { color: var(--bleu); }
 
     /* PROJETS PHARES */
     .projets-layout {
@@ -330,69 +344,69 @@
       margin-top: 40px;
     }
     .carte-projet {
-      background: var(--carte);
-      border: 1px solid var(--carte-bordure);
+      background: var(--bg-carte);
+      border: 1px solid var(--bordure-legere);
       border-radius: var(--rayon);
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      box-shadow: var(--ombre);
       transition: var(--transition);
     }
     .carte-projet:hover {
       transform: translateY(-6px);
-      border-color: var(--bleu-cyan);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      border-color: var(--bleu);
+      box-shadow: var(--ombre-forte);
     }
-    .projet-header-banner {
+    .projet-banner {
       height: 150px;
-      background: linear-gradient(135deg, #0f1e3d, #091224);
+      background: linear-gradient(135deg, #0f172a, #1e293b);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3.2rem;
-      color: var(--bleu-cyan);
-      border-bottom: 1px solid var(--carte-bordure);
+      font-size: 3rem;
+      color: #38bdf8;
     }
     .projet-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
     .projet-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
     .tag-techno {
       font-size: 0.72rem;
       font-weight: 700;
-      padding: 3px 10px;
-      background: rgba(37, 99, 235, 0.12);
-      border: 1px solid rgba(37, 99, 235, 0.25);
+      padding: 4px 10px;
+      background: var(--bleu-subtil);
+      border: 1px solid rgba(37, 99, 235, 0.2);
       border-radius: 99px;
-      color: var(--bleu-cyan);
+      color: var(--bleu);
     }
-    .projet-body h3 { font-size: 1.15rem; margin-bottom: 10px; font-weight: 700; }
-    .projet-body p { font-size: 0.88rem; color: var(--texte-mute); line-height: 1.7; margin-bottom: 20px; flex: 1; }
+    .projet-body h3 { font-size: 1.18rem; margin-bottom: 8px; font-weight: 700; color: var(--texte-noir); }
+    .projet-body p { font-size: 0.9rem; color: var(--texte-corps); line-height: 1.7; margin-bottom: 20px; flex: 1; }
     .projet-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-top: 1px solid var(--carte-bordure);
+      border-top: 1px solid var(--bordure-legere);
       padding-top: 16px;
     }
     .projet-link {
       font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--bleu-cyan);
+      font-weight: 700;
+      color: var(--bleu);
       text-decoration: none;
       display: flex;
       align-items: center;
       gap: 6px;
       transition: var(--transition);
     }
-    .projet-link:hover { color: #fff; gap: 10px; }
+    .projet-link:hover { color: var(--bleu-fonce); gap: 9px; }
 
-    /* PARCOURS */
+    /* PARCOURS ACADÉMIQUE */
     .timeline { position: relative; max-width: 800px; margin: 40px auto 0; }
     .timeline::before {
       content: '';
       position: absolute;
       left: 20px; top: 0; bottom: 0;
       width: 2px;
-      background: var(--carte-bordure);
+      background: #cbd5e1;
     }
     .timeline-item { position: relative; padding-left: 60px; margin-bottom: 36px; }
     .timeline-dot {
@@ -400,18 +414,19 @@
       left: 11px; top: 4px;
       width: 20px; height: 20px;
       border-radius: 50%;
-      background: var(--bg-principal);
-      border: 3px solid var(--bleu-cyan);
+      background: #fff;
+      border: 4px solid var(--bleu);
     }
     .timeline-content {
-      background: var(--carte);
-      border: 1px solid var(--carte-bordure);
+      background: #fff;
+      border: 1px solid var(--bordure-legere);
       border-radius: 14px;
       padding: 24px;
+      box-shadow: var(--ombre);
     }
-    .timeline-annee { font-size: 0.8rem; font-weight: 700; color: var(--bleu-cyan); margin-bottom: 6px; }
-    .timeline-titre { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
-    .timeline-lieu { font-size: 0.88rem; color: var(--texte-mute); }
+    .timeline-annee { font-size: 0.82rem; font-weight: 800; color: var(--bleu); margin-bottom: 6px; }
+    .timeline-titre { font-size: 1.12rem; font-weight: 800; color: var(--texte-noir); margin-bottom: 6px; }
+    .timeline-lieu { font-size: 0.9rem; color: var(--texte-mute); }
 
     /* CONTACT */
     .contact-wrapper {
@@ -421,82 +436,84 @@
       align-items: start;
       margin-top: 40px;
     }
-    .contact-item-card {
+    .contact-card {
       display: flex;
       align-items: center;
       gap: 16px;
-      background: var(--carte);
-      border: 1px solid var(--carte-bordure);
+      background: #fff;
+      border: 1px solid var(--bordure-legere);
       border-radius: 14px;
       padding: 18px 22px;
       margin-bottom: 16px;
       text-decoration: none;
       color: inherit;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
       transition: var(--transition);
     }
-    .contact-item-card:hover {
-      border-color: var(--bleu-cyan);
+    .contact-card:hover {
+      border-color: var(--bleu);
       transform: translateX(6px);
-      background: var(--carte-hover);
+      box-shadow: var(--ombre);
     }
-    .contact-icon-box {
-      width: 44px; height: 44px;
+    .contact-icon {
+      width: 46px; height: 46px;
       border-radius: 12px;
-      background: rgba(37, 99, 235, 0.12);
-      border: 1px solid rgba(37, 99, 235, 0.25);
+      background: var(--bleu-subtil);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-      color: var(--bleu-cyan);
+      font-size: 1.3rem;
+      color: var(--bleu);
       flex-shrink: 0;
     }
-    .contact-meta span { font-size: 0.78rem; color: var(--texte-sombre); display: block; }
-    .contact-meta strong { font-size: 0.95rem; color: #fff; }
+    .contact-meta span { font-size: 0.78rem; color: var(--texte-mute); font-weight: 600; display: block; }
+    .contact-meta strong { font-size: 0.95rem; color: var(--texte-noir); }
 
     .form-box {
-      background: var(--carte);
-      border: 1px solid var(--carte-bordure);
+      background: #fff;
+      border: 1px solid var(--bordure-legere);
       border-radius: var(--rayon);
       padding: 34px;
+      box-shadow: var(--ombre);
     }
     .form-row { margin-bottom: 18px; }
     .form-row label {
       display: block;
-      font-size: 0.84rem;
-      font-weight: 600;
-      color: var(--texte-mute);
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--texte-noir);
       margin-bottom: 8px;
     }
     .form-row input, .form-row textarea {
       width: 100%;
-      background: rgba(7, 11, 20, 0.7);
-      border: 1px solid var(--carte-bordure);
+      background: var(--bg-carte-alt);
+      border: 1px solid var(--bordure-legere);
       border-radius: 10px;
       padding: 12px 16px;
-      color: #fff;
+      color: var(--texte-noir);
       font-family: inherit;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       transition: var(--transition);
       outline: none;
     }
     .form-row input:focus, .form-row textarea:focus {
-      border-color: var(--bleu-cyan);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+      border-color: var(--bleu);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
     footer {
-      border-top: 1px solid var(--carte-bordure);
+      border-top: 1px solid var(--bordure-legere);
       padding: 40px 0;
       text-align: center;
-      background: #05080f;
+      background: #fff;
     }
-    footer p { color: var(--texte-mute); font-size: 0.88rem; }
+    footer p { color: var(--texte-mute); font-size: 0.9rem; }
 
     @media (max-width: 900px) {
       .hero-layout, .grille-piliers, .contact-wrapper { grid-template-columns: 1fr; }
       .projets-layout { grid-template-columns: 1fr; }
       .nav-items { display: none; }
       .hero-illustration { order: -1; margin-bottom: 20px; }
-      .hero-card-visuel { width: 260px; height: 320px; }
+      .hero-cadre-photo { width: 260px; height: 320px; }
     }
   </style>
 </head>
@@ -515,12 +532,12 @@
       <li><a href="#parcours" data-fr="Parcours" data-en="Education">Parcours</a></li>
       <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
       <li>
-        <a href="https://github.com/baks012" target="_blank" class="btn btn-secondaire" style="padding:8px 18px;font-size:0.82rem;">
+        <a href="https://github.com/baks012" target="_blank" class="btn btn-noir" style="padding:8px 18px;font-size:0.84rem;">
           <i class="fab fa-github"></i> <span>GitHub</span>
         </a>
       </li>
       <li>
-        <div class="lang-switcher">
+        <div class="lang-switch">
           <button class="lang-btn actif" onclick="changerLangue('fr')">FR</button>
           <button class="lang-btn" onclick="changerLangue('en')">EN</button>
         </div>
@@ -534,7 +551,7 @@
   <div class="container hero-layout">
     <div class="hero-text-col">
       <div class="hero-statut">
-        <span class="pulsation-point"></span>
+        <span class="point-pulsant"></span>
         <span data-fr="Disponible pour opportunités professionnelles" data-en="Available for software & web opportunities">Disponible pour opportunités professionnelles</span>
       </div>
       
@@ -547,15 +564,15 @@
         <span id="typingTarget"></span><span class="curseur-bar"></span>
       </div>
 
-      <p class="hero-presentation" data-fr="Développeur diplômé du BTS en Informatique Développement d'Applications (IDA). Je conçois des solutions logicielles fiables, des bases de données structurées et des plateformes web modernes et réactives." data-en="Certified Software Developer with an Associate Degree in Application Development (BTS IDA). I build robust applications, structured relational databases, and modern web platforms.">
-        Développeur diplômé du BTS en Informatique Développement d'Applications (IDA). Je conçois des solutions logicielles fiables, des bases de données structurées et des plateformes web modernes et réactives.
+      <p class="hero-desc" data-fr="Développeur diplômé du BTS en Informatique Développement d'Applications (IDA). Je conçois des solutions logicielles performantes, des bases de données structurées et des plateformes web modernes et intuitives." data-en="Certified Software Developer with an Associate Degree in Application Development (BTS IDA). I build robust applications, structured relational databases, and modern web platforms.">
+        Développeur diplômé du BTS en Informatique Développement d'Applications (IDA). Je conçois des solutions logicielles performantes, des bases de données structurées et des plateformes web modernes et intuitives.
       </p>
 
       <div class="hero-actions">
-        <a href="https://wa.me/2250556967845" target="_blank" class="btn btn-principal">
+        <a href="https://wa.me/2250556967845" target="_blank" class="btn btn-bleu">
           <i class="fab fa-whatsapp"></i> <span data-fr="Discuter sur WhatsApp" data-en="Chat on WhatsApp">Discuter sur WhatsApp</span>
         </a>
-        <a href="#projets" class="btn btn-secondaire">
+        <a href="#projets" class="btn btn-vide">
           <i class="fas fa-layer-group"></i> <span data-fr="Voir mes Projets" data-en="Explore Projects">Voir mes Projets</span>
         </a>
       </div>
@@ -567,23 +584,22 @@
       </div>
     </div>
 
-    <!-- Visuel Photo Professionnelle -->
+    <!-- Photo de Bakayoko Sory (Garanti sans bug) -->
     <div class="hero-illustration">
-      <div class="hero-card-visuel">
-        <!-- Ta photo officielle (avec fallback automatique sur ton avatar GitHub) -->
-        <img src="photo.jpg" alt="Bakayoko Sory" onerror="this.src='https://avatars.githubusercontent.com/u/190827299?v=4'" />
+      <div class="hero-cadre-photo">
+        <img src="https://github.com/baks012.png" alt="Bakayoko Sory" />
       </div>
     </div>
   </div>
 </section>
 
-<!-- COMPÉTENCES REELLES -->
-<section id="competences" class="section">
+<!-- COMPÉTENCES EN PILIERS -->
+<section id="competences" class="section" style="background:#fff;">
   <div class="container">
     <div class="section-tag" data-fr="Expertise Technique" data-en="Technical Expertise">Expertise Technique</div>
     <h2 class="section-titre" data-fr="Mes <span>Compétences</span> Métier" data-en="My Core <span>Skills</span>">Mes <span>Compétences</span> Métier</h2>
-    <p class="section-desc" data-fr="Un profil complet combinant programmation logicielle, développement web, modélisation de données et création graphique." data-en="A balanced profile combining software programming, web development, relational data modeling, and media design.">
-      Un profil complet combinant programmation logicielle, développement web, modélisation de données et création graphique.
+    <p class="section-desc" data-fr="Un profil complet combinant programmation logicielle, développement web, modélisation de données et création multimédia." data-en="A balanced profile combining software programming, web development, relational data modeling, and media design.">
+      Un profil complet combinant programmation logicielle, développement web, modélisation de données et création multimédia.
     </p>
 
     <div class="grille-piliers">
@@ -594,15 +610,15 @@
           <div class="pilier-icon"><i class="fas fa-globe"></i></div>
           <div>
             <h3 data-fr="Développement Web" data-en="Web Development">Développement Web</h3>
-            <span style="font-size:0.8rem;color:var(--texte-sombre);" data-fr="Front-End & Back-End" data-en="Full-Stack Technologies">Front-End & Back-End</span>
+            <span style="font-size:0.82rem;color:var(--texte-mute);" data-fr="Front-End & Back-End" data-en="Full-Stack Technologies">Front-End & Back-End</span>
           </div>
         </div>
-        <div class="skills-badges">
-          <span class="skill-chip"><i class="fab fa-html5"></i> HTML5</span>
-          <span class="skill-chip"><i class="fab fa-css3-alt"></i> CSS3</span>
-          <span class="skill-chip"><i class="fab fa-js"></i> JavaScript (ES6)</span>
-          <span class="skill-chip"><i class="fab fa-php"></i> PHP</span>
-          <span class="skill-chip"><i class="fas fa-mobile-alt"></i> Responsive Design</span>
+        <div class="skills-chips">
+          <span class="chip"><i class="fab fa-html5"></i> HTML5</span>
+          <span class="chip"><i class="fab fa-css3-alt"></i> CSS3</span>
+          <span class="chip"><i class="fab fa-js"></i> JavaScript (ES6)</span>
+          <span class="chip"><i class="fab fa-php"></i> PHP</span>
+          <span class="chip"><i class="fas fa-mobile-alt"></i> Responsive Design</span>
         </div>
       </div>
 
@@ -612,14 +628,14 @@
           <div class="pilier-icon"><i class="fas fa-laptop-code"></i></div>
           <div>
             <h3 data-fr="Logiciel & Programmation" data-en="Software Programming">Logiciel & Programmation</h3>
-            <span style="font-size:0.8rem;color:var(--texte-sombre);" data-fr="Système & Logiciels de gestion" data-en="Desktop & Core Algorithms">Système & Logiciels de gestion</span>
+            <span style="font-size:0.82rem;color:var(--texte-mute);" data-fr="Système & Logiciels de gestion" data-en="Desktop & Core Algorithms">Système & Logiciels de gestion</span>
           </div>
         </div>
-        <div class="skills-badges">
-          <span class="skill-chip"><i class="fas fa-terminal"></i> Langage C</span>
-          <span class="skill-chip"><i class="fab fa-windows"></i> WinDev</span>
-          <span class="skill-chip"><i class="fas fa-sitemap"></i> Algorithmique</span>
-          <span class="skill-chip"><i class="fas fa-cogs"></i> Génie Logiciel</span>
+        <div class="skills-chips">
+          <span class="chip"><i class="fas fa-terminal"></i> Langage C</span>
+          <span class="chip"><i class="fab fa-windows"></i> WinDev</span>
+          <span class="chip"><i class="fas fa-sitemap"></i> Algorithmique</span>
+          <span class="chip"><i class="fas fa-cogs"></i> Génie Logiciel</span>
         </div>
       </div>
 
@@ -629,14 +645,14 @@
           <div class="pilier-icon"><i class="fas fa-database"></i></div>
           <div>
             <h3 data-fr="Bases de Données & Data" data-en="Databases & Data Modeling">Bases de Données & Data</h3>
-            <span style="font-size:0.8rem;color:var(--texte-sombre);" data-fr="Modélisation & Administration" data-en="Architecture & Queries">Modélisation & Administration</span>
+            <span style="font-size:0.82rem;color:var(--texte-mute);" data-fr="Modélisation & Administration" data-en="Architecture & Queries">Modélisation & Administration</span>
           </div>
         </div>
-        <div class="skills-badges">
-          <span class="skill-chip"><i class="fas fa-server"></i> MySQL</span>
-          <span class="skill-chip"><i class="fas fa-table"></i> Microsoft Access</span>
-          <span class="skill-chip"><i class="fas fa-project-diagram"></i> Méthode Merise (MCD/MLD)</span>
-          <span class="skill-chip"><i class="fas fa-code-branch"></i> Requêtes SQL Avancées</span>
+        <div class="skills-chips">
+          <span class="chip"><i class="fas fa-server"></i> MySQL</span>
+          <span class="chip"><i class="fas fa-table"></i> Microsoft Access</span>
+          <span class="chip"><i class="fas fa-project-diagram"></i> Méthode Merise (MCD/MLD)</span>
+          <span class="chip"><i class="fas fa-code-branch"></i> Requêtes SQL Avancées</span>
         </div>
       </div>
 
@@ -646,15 +662,15 @@
           <div class="pilier-icon"><i class="fas fa-palette"></i></div>
           <div>
             <h3 data-fr="UI/UX & Multimédia" data-en="UI/UX & Media Design">UI/UX & Multimédia</h3>
-            <span style="font-size:0.8rem;color:var(--texte-sombre);" data-fr="Prototypage & Création vidéo" data-en="Prototypes & Video Editing">Prototypage & Création vidéo</span>
+            <span style="font-size:0.82rem;color:var(--texte-mute);" data-fr="Prototypage & Création vidéo" data-en="Prototypes & Video Editing">Prototypage & Création vidéo</span>
           </div>
         </div>
-        <div class="skills-badges">
-          <span class="skill-chip"><i class="fas fa-image"></i> Adobe Photoshop</span>
-          <span class="skill-chip"><i class="fas fa-vector-square"></i> Adobe XD</span>
-          <span class="skill-chip"><i class="fas fa-film"></i> DaVinci Resolve</span>
-          <span class="skill-chip"><i class="fab fa-git-alt"></i> Git & GitHub</span>
-          <span class="skill-chip"><i class="fas fa-code"></i> VS Code</span>
+        <div class="skills-chips">
+          <span class="chip"><i class="fas fa-image"></i> Adobe Photoshop</span>
+          <span class="chip"><i class="fas fa-vector-square"></i> Adobe XD</span>
+          <span class="chip"><i class="fas fa-film"></i> DaVinci Resolve</span>
+          <span class="chip"><i class="fab fa-git-alt"></i> Git & GitHub</span>
+          <span class="chip"><i class="fas fa-code"></i> VS Code</span>
         </div>
       </div>
 
@@ -662,20 +678,20 @@
   </div>
 </section>
 
-<!-- PROJETS RÉELS GITHUB -->
-<section id="projets" class="section" style="background: rgba(13, 21, 39, 0.4);">
+<!-- PROJETS GITHUB -->
+<section id="projets" class="section">
   <div class="container">
     <div class="section-tag" data-fr="Dépôts GitHub" data-en="GitHub Repositories">Dépôts GitHub</div>
     <h2 class="section-titre" data-fr="Projets <span>sur mon GitHub</span>" data-en="Projects <span>on GitHub</span>">Projets <span>sur mon GitHub</span></h2>
-    <p class="section-desc" data-fr="Découvrez les projets personnels et académiques disponibles sur mon profil GitHub baks012." data-en="Explore the personal and academic projects directly published on my GitHub profile baks012.">
-      Découvrez les projets personnels et académiques disponibles sur mon profil GitHub baks012.
+    <p class="section-desc" data-fr="Découvrez les projets personnels et académiques disponibles sur mon compte GitHub baks012." data-en="Explore the personal and academic projects directly published on my GitHub profile baks012.">
+      Découvrez les projets personnels et académiques disponibles sur mon compte GitHub baks012.
     </p>
 
     <div class="projets-layout">
       
-      <!-- Projet 1 : Mon-Portfolio -->
+      <!-- Carte 1 -->
       <div class="carte-projet">
-        <div class="projet-header-banner">
+        <div class="projet-banner">
           <i class="fas fa-laptop-code"></i>
         </div>
         <div class="projet-body">
@@ -686,21 +702,21 @@
             <span class="tag-techno">Vercel</span>
           </div>
           <h3 data-fr="Mon-Portfolio" data-en="Personal Portfolio">Mon-Portfolio</h3>
-          <p data-fr="Site web personnel bilingue (FR/EN) avec animations soignées, design responsive et intégration complète de mon profil professionnel." data-en="Bilingual personal portfolio website with smooth animations, responsive layout, and full professional profile showcase.">
-            Site web personnel bilingue (FR/EN) avec animations soignées, design responsive et intégration complète de mon profil professionnel.
+          <p data-fr="Site web personnel bilingue (FR/EN) conçu avec une interface responsive soignée, des animations fluides et une présentation complète de mes réalisations." data-en="Bilingual personal portfolio website with smooth animations, responsive layout, and full professional profile showcase.">
+            Site web personnel bilingue (FR/EN) conçu avec une interface responsive soignée, des animations fluides et une présentation complète de mes réalisations.
           </p>
           <div class="projet-footer">
             <a href="https://github.com/baks012/Mon-Portfolio" target="_blank" class="projet-link">
               <i class="fab fa-github"></i> <span data-fr="Voir sur GitHub" data-en="View on GitHub">Voir sur GitHub</span>
             </a>
-            <span style="font-size:0.75rem;color:#34d399;font-weight:600;" data-fr="● En Production" data-en="● Live">● En Production</span>
+            <span style="font-size:0.75rem;color:#059669;font-weight:700;" data-fr="● En Ligne" data-en="● Live">● En Ligne</span>
           </div>
         </div>
       </div>
 
-      <!-- Projet 2 : Plateforme Restauration -->
+      <!-- Carte 2 -->
       <div class="carte-projet">
-        <div class="projet-header-banner">
+        <div class="projet-banner">
           <i class="fas fa-utensils"></i>
         </div>
         <div class="projet-body">
@@ -718,14 +734,14 @@
             <a href="https://github.com/baks012" target="_blank" class="projet-link">
               <i class="fab fa-github"></i> <span data-fr="Voir sur GitHub" data-en="View on GitHub">Voir sur GitHub</span>
             </a>
-            <span style="font-size:0.75rem;color:var(--bleu-cyan);font-weight:600;" data-fr="● Fonctionnel" data-en="● Functional">● Fonctionnel</span>
+            <span style="font-size:0.75rem;color:var(--bleu);font-weight:700;" data-fr="● Fonctionnel" data-en="● Functional">● Fonctionnel</span>
           </div>
         </div>
       </div>
 
-      <!-- Projet 3 : Gestion Personnel Access -->
+      <!-- Carte 3 -->
       <div class="carte-projet">
-        <div class="projet-header-banner">
+        <div class="projet-banner">
           <i class="fas fa-users-cog"></i>
         </div>
         <div class="projet-body">
@@ -742,7 +758,7 @@
             <a href="https://github.com/baks012" target="_blank" class="projet-link">
               <i class="fab fa-github"></i> <span data-fr="Voir sur GitHub" data-en="View on GitHub">Voir sur GitHub</span>
             </a>
-            <span style="font-size:0.75rem;color:var(--bleu-cyan);font-weight:600;" data-fr="● Terminé" data-en="● Completed">● Terminé</span>
+            <span style="font-size:0.75rem;color:var(--bleu);font-weight:700;" data-fr="● Terminé" data-en="● Completed">● Terminé</span>
           </div>
         </div>
       </div>
@@ -752,10 +768,10 @@
 </section>
 
 <!-- PARCOURS ACADÉMIQUE -->
-<section id="parcours" class="section">
+<section id="parcours" class="section" style="background:#fff;">
   <div class="container">
     <div style="text-align:center;">
-      <div class="section-tag" data-fr="Diplômes & Éducation" data-en="Education">Diplômes & Éducation</div>
+      <div class="section-tag" data-fr="Formation & Diplômes" data-en="Education">Formation & Diplômes</div>
       <h2 class="section-titre" data-fr="Mon <span>Parcours</span> Académique" data-en="Academic <span>Background</span>">Mon <span>Parcours</span> Académique</h2>
     </div>
 
@@ -771,7 +787,7 @@
           <div class="timeline-lieu">
             <strong>Institut Supérieur Nanan Thérèse (ISNT)</strong> — Le Plateau, Abidjan
           </div>
-          <p style="margin-top:10px;font-size:0.88rem;color:var(--texte-mute);" data-fr="Spécialisation en développement d'applications, algorithmique avancée, conception Merise, bases de données relationnelles (SQL) et programmation web." data-en="Specialized in application development, advanced algorithms, Merise database architecture, SQL, and modern web engineering.">
+          <p style="margin-top:10px;font-size:0.9rem;color:var(--texte-corps);" data-fr="Spécialisation en développement d'applications, algorithmique avancée, conception Merise, bases de données relationnelles (SQL) et programmation web." data-en="Specialized in application development, advanced algorithms, Merise database architecture, SQL, and modern web engineering.">
             Spécialisation en développement d'applications, algorithmique avancée, conception Merise, bases de données relationnelles (SQL) et programmation web.
           </p>
         </div>
@@ -785,7 +801,7 @@
             Baccalauréat Général — Série D
           </div>
           <div class="timeline-lieu">Abidjan, Côte d'Ivoire</div>
-          <p style="margin-top:10px;font-size:0.88rem;color:var(--texte-mute);" data-fr="Formation scientifique développant la rigueur logique, l'analyse et la méthodologie de résolution de problèmes." data-en="Scientific background focused on mathematical logic, critical analysis, and structured problem-solving.">
+          <p style="margin-top:10px;font-size:0.9rem;color:var(--texte-corps);" data-fr="Formation scientifique développant la rigueur logique, l'analyse et la méthodologie de résolution de problèmes." data-en="Scientific background focused on mathematical logic, critical analysis, and structured problem-solving.">
             Formation scientifique développant la rigueur logique, l'analyse et la méthodologie de résolution de problèmes.
           </p>
         </div>
@@ -795,8 +811,8 @@
   </div>
 </section>
 
-<!-- CONTACT RAPIDE -->
-<section id="contact" class="section" style="background: rgba(13, 21, 39, 0.4);">
+<!-- CONTACT -->
+<section id="contact" class="section">
   <div class="container">
     <div class="contact-wrapper">
       
@@ -809,24 +825,24 @@
 
         <div style="margin-top:28px;">
           
-          <a href="https://wa.me/2250556967845" target="_blank" class="contact-item-card">
-            <div class="contact-icon-box"><i class="fab fa-whatsapp"></i></div>
+          <a href="https://wa.me/2250556967845" target="_blank" class="contact-card">
+            <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
             <div class="contact-meta">
               <span>WhatsApp Direct</span>
               <strong>+225 05 56 96 78 45</strong>
             </div>
           </a>
 
-          <a href="mailto:sorybakayoko012@gmail.com" class="contact-item-card">
-            <div class="contact-icon-box"><i class="fas fa-envelope"></i></div>
+          <a href="mailto:sorybakayoko012@gmail.com" class="contact-card">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
             <div class="contact-meta">
               <span>Email</span>
               <strong>sorybakayoko012@gmail.com</strong>
             </div>
           </a>
 
-          <a href="https://linkedin.com/in/sory-bakayoko-1092523b9" target="_blank" class="contact-item-card">
-            <div class="contact-icon-box"><i class="fab fa-linkedin-in"></i></div>
+          <a href="https://linkedin.com/in/sory-bakayoko-1092523b9" target="_blank" class="contact-card">
+            <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
             <div class="contact-meta">
               <span>LinkedIn</span>
               <strong>linkedin.com/in/sory-bakayoko-1092523b9</strong>
@@ -836,7 +852,7 @@
         </div>
       </div>
 
-      <!-- Formulaire de contact direct -->
+      <!-- Formulaire -->
       <div class="form-box">
         <form action="mailto:sorybakayoko012@gmail.com" method="post" enctype="text/plain">
           <div class="form-row">
@@ -855,7 +871,7 @@
             <label data-fr="Message" data-en="Message">Message</label>
             <textarea name="message" rows="5" required placeholder="Bonjour Bakayoko Sory, je vous contacte au sujet de..."></textarea>
           </div>
-          <button type="submit" class="btn btn-principal" style="width:100%;justify-content:center;">
+          <button type="submit" class="btn btn-bleu" style="width:100%;justify-content:center;">
             <i class="fas fa-paper-plane"></i> <span data-fr="Envoyer le Message" data-en="Send Message">Envoyer le Message</span>
           </button>
         </form>
@@ -874,7 +890,7 @@
 
 <!-- SCRIPTS INTERACTIFS -->
 <script>
-  // Animation d'écriture dynamique (Typing Text)
+  // Animation Machine à écrire
   const textesFR = [
     "Développeur Web & Logiciel",
     "Titulaire du BTS Informatique (IDA)",
@@ -919,7 +935,7 @@
   }
   animerTexte();
 
-  // Commutateur de langue FR / EN
+  // Commutateur de langue bilingue
   function changerLangue(lang) {
     langueCourante = lang;
     document.querySelectorAll('.lang-btn').forEach(b => {
@@ -934,7 +950,7 @@
     });
   }
 
-  // Effet navbar collante
+  // Navbar collante avec effet d'ombre
   window.addEventListener('scroll', () => {
     const nav = document.getElementById('navbar');
     if (window.scrollY > 40) {
